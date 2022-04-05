@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>RendezVous-Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&family=Roboto:ital,wght@0,400;0,900;1,300;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
+
+     <link rel="stylesheet" th:href="@{css/panel-style.css}" type="text/css">
+     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+</head>
+
+<body>
+
+    <div class="panel-wrapper">
+
+
+        <div class="left-wrapper">
+            <div class="logo">
+                rendexVous
+            </div>
+            <div class="me-user">
+                Moje zdjęcie
+                Marcin
+            </div>
+            <div class="left-wrapper-menu">
+
+                <button class="menu-btn menu-btn-browse-candidates" value="0">
+                    <i class="fas fa-user-friends"></i>
+                    <p>Przeglądaj</p>
+                </button>
+                <button class="menu-btn menu-btn-preferences" value="0">
+                    <i class="fas fa-sliders-h"></i>
+                    <p>Preferencjie</p>
+                </button>
+                <button class="menu-btn menu-btn-message" value="0">
+                    <i class="fas fa-comment"></i>
+                    <p>Wiadomości</p>
+                </button>
+                <button class="menu-btn menu-btn-matches" value="">
+                    <i class="fas fa-heart"></i>
+                    <p>Dopasowania</p>
+                </button>
+                <button class="menu-btn menu-btn-settings" value="0">
+                    <i class="fas fa-cog"></i>
+                    <p>Ustawienia</p>
+                </button>
+                <button class="menu-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <p>Wyloguj</p>
+                </button>
+
+
+            </div>
+            <div></div>
+        </div>
+
+
+        <div class="right-wrapper">
+
+            <div class="browse-candidates-box">
+
+
+                <div class="c">
+                    <p class="viewed-name"></p>
+                    <p class="viewed-age"></p>
+                </div>
+
+                <!-- Slider main container -->
+                <div class="swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide">Slide 1</div>
+                        <div class="swiper-slide">Slide 2</div>
+                        <div class="swiper-slide">Slide 3</div>
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+
+                    <!-- If we need scrollbar -->
+                    <div class="swiper-scrollbar"></div>
+                </div>
+
+
+
+                <button class="like-btn btn">Like</button>
+                <button class="reject-btn btn">Reject</button>
+
+                <div>
+                    <p>O mnie</p>
+                     <p class="viewed-aboutMe"></p>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero illo dolores accusamus ex sed
+                        maiores soluta reiciendis optio ab? Doloremque.</p>
+                </div>
+
+                <div>
+                    <p>Informacje dodatkowe</p>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="preferences-box">
+
+                <div>
+                    <p>Szukam</p>
+                    <select class="select-gender">
+                        <option value="all">Wszystkich</option>
+                        <option value="man">Meżczyzn</option>
+                        <option value="woman">Kobiet</option>
+                    </select>
+                </div>
+
+
+                <div>
+                    <input class="slider-min-age-input" type="range" min="18" max="80" value="40"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <input class="slider-max-age-input" type="range" min="18" max="80" value="40"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <input class="slider-distance-input" type="range" min="0" max="160" value="80"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <p>Jakich osób szukasz</p>
+                    <select class="select-relationship-status">
+                        <option value="all">Wszystkich</option>
+                        <option value="single">Tylko Singli</option>
+                        <option value="relation">Osób w związku</option>
+                        <option value="wedding">Tylko po ślubiee</option>
+                        <option value="divorce">Tylko po rozwodzie</option>
+                        <option value="complicated">osób z To skomplikowane</option>
+                        <option value="beer">W związku z piwem</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p>Pokaż mi użytkowników ze względu na orientacjie</p>
+                    <select class="select-sexual-orientation">
+                        <option value="all">Wszystkich</option>
+                        <option value="hetero">Hetero</option>
+                        <option value="homo">Homo</option>
+                        <option value="bisexual">Bisexual</option>
+                        <option value="asexuality">Asexuality</option>
+                    </select>
+                </div>
+
+                <button class="save-preferences-btn" type="default">Zapisz Filtry</button>
+
+            </div>
+
+
+            <div class="message-box">
+
+                <button class="up" type="default">updateRecipients</button>
+
+
+                <div>
+
+                    <label>Who to send the message to?</label>
+                    <input type="text" class="recipient-name-input" placeholder="User will receive the message...">
+                    <label>Your message</label>
+                    <input class="input-field" type="text" placeholder="message" />
+                    <button class="send-btn">send</button>
+                </div>
+
+                <div class="response">
+                    <p>Tu są twoje wiadomości</p>
+                </div>
+
+            </div>
+
+
+
+
+
+
+            <div class="matches-box"></div>
+
+            <div class="profile-settings-box">
+
+                <div>
+                    <input class="description-name" type="text" placeholder="Twoje imie">
+                </div>
+
+                <div>
+                    <select class="description-gender">
+                        <option value="man">Meżczyzną</option>
+                        <option value="woman">Kobietą</option>
+                    </select>
+                </div>
+
+
+                <div>
+                    <input class="description-age" type="range" min="0" max="80" value="40"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <textarea class="description-aboutMe" placeholder="o mnie"></textarea>
+                </div>
+
+
+                <div>
+                    <p>Określ swoją orientacjie sexualną</p>
+                    <select class="description-sexual-orientation">
+                        <option value="hetero">Hetero</option>
+                        <option value="homo">Homo</option>
+                        <option value="bisexual">Bisexual</option>
+                        <option value="asexuality">Asexuality</option>
+                    </select>
+                </div>
+
+                <div>
+
+                    <p>Określ swój status związku</p>
+                    <select class="description-relationship-status">
+                        <option value="single">Jestem singlem</option>
+                        <option value="relation">Jestem w związku</option>
+                        <option value="wedding">Po ślubie</option>
+                        <option value="divorce">Po rozwodzie</option>
+                        <option value="complicated">To skomplikowane</option>
+                        <option value="beer">W związku z piwem</option>
+                    </select>
+                </div>
+
+                <button class="save-description-btn" type="default">Zapisz UserDescription</button>
+
+                <div>
+                    <label>Wyślij zdjęcie</label>
+                    <input class="description-image-input" type="file" placeholder="zdjęcie">
+                </div>
+
+                <button class="save-description-image-btn">Ustaw zdjęcie</button>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+     <script th:src="@{js/stomp-lib.js}"></script>
+     <script type="module" th:src="@{js/panel-js.js}"></script>
+</body>
+
+</html>

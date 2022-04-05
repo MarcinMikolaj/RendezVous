@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RendezVous-Kontakt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&family=Roboto:ital,wght@0,400;0,900;1,300;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{css/contact-style.css}">
+</head>
+
+<body>
+
+    <div class="contener">
+
+        <!-- Nawigacja -->
+        <nav class="navigation">
+            <div class="navigation-logo">
+                <p>rendez<span>Vous</span><i class="fas fa-heart"></i></p>
+            </div>
+            <div class="navigation-buttons">
+                <button class="button button-nav"><i class="fas fa-user-edit"></i>Zarejestruj się</button>
+                <button class="button button-nav"><i class="fas fa-user"></i>Zaloguj się</button>
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+
+        <p class="section-title section-title-first">Skontaktuj się z nami przez formularz</p>
+        <main class="main">
+
+            <div class="contact-wrapper">
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" th:method="post" th:action="@{/contact/form/send}" th:object="${contactForm}" enctype="multipart/form-data">
+
+                        <div>
+                            <div class="input-box">
+                                <i class="fas fa-user"></i>
+                                <input type="text" th:field="*{name}" name="name" placeholder="Twoje imię">
+                            </div>
+                            <p class="input-error name-error"></p>
+                        </div>
+
+
+                        <div>
+                            <div class="input-box">
+                                <i class="fas fa-envelope"></i>
+                                <input type="text" th:field="*{email}" name="email" placeholder="Twój adres email">
+                            </div>
+                            <p class="input-error email-error"></p>
+                        </div>
+
+
+                        <div>
+                            <div class="input-box">
+                                <i class="fas fa-pen"></i>
+                                <input type="text" th:field="*{title}" name="title" placeholder="Temat">
+                            </div>
+                            <p class="input-error title-error"></p>
+                        </div>
+
+
+
+                        <select name="" id="">
+                            <option disabled value="">--Rodzaj zgłoszenia--</option>
+                            <option value="">Potrzebuje odpowiedzi na pytanie</option>
+                            <option value="">Chce zgłosić błąd lub problem z aplikacją</option>
+                            <option value="">Mam inny problem</option>
+                        </select>
+
+                            <!-- Dwie linijki poniżej tworzą wspólny blok -->
+                            <textarea name="formContent" placeholder="Podaj treść wiadomości"></textarea>
+                            <p class="input-error formContent-error"></p>
+
+
+
+                        <label for="file-upload" class="custom-file-upload"><i class="fa fa-cloud-upload"></i>Prześlij
+                            pliki</label>
+                        <input id="file-upload" th:name="multipartFile" type="file">
+
+                        <label for="check-box-agreement">
+                            <input id="check-box-agreement" name="agreement" type="checkbox">Wyrażam zgodę
+                            na przetwarzanie
+                            moich danych osobowych, w celu uzyskania
+                            porady.
+                            <p class="input-error agreement-error"></p>
+                        </label>
+
+                        <button type="button" class="send-btn">wyślij Zgłoszenie</button>
+
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <p class="section-title">Informacje kontaktowe</p>
+
+        <section class="section-contact-info">
+
+            <div class="contact-info-box">
+                <i class="fas fa-headset"></i>
+                <div class="contact-info-box-text">
+                    <p>Telefon kontaktowy:</p>
+                    <p>515 471 590</p>
+                </div>
+            </div>
+
+            <div class="contact-info-box">
+                <i class="fas fa-envelope-open-text"></i>
+                <div class="contact-info-box-text">
+                    <p>E-mail: rendez.vous.poland@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="contact-info-box">
+                <i class="fas fa-map-marked"></i>
+                <div class="contact-info-box-text">
+                    <p>ul.Biegonicka 22, 33-300 Nowy Sącz</p>
+                    <p></p>
+                </div>
+
+            </div>
+
+            <div class="contact-info-box">
+                <i class="fas fa-users"></i>
+                <div class="contact-info-box-text">
+                    <p>Mikołajczyk Marcin</p>
+                    <p>Miłosz Madej</p>
+                    <p>Mateusz Marcisz</p>
+                    <p>Patryk Łacny</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <p class="section-title">Znajdz nas na mapie</p>
+
+        <div class="map-wrapper">
+            <div id="map"></div>
+        </div>
+
+        <footer class="footer">
+            <p class="logo">rendez<span class="vous-vous">Vous</span><i class="fas fa-heart"></i>
+            </p>
+
+            <div class="button-box">
+                <button class="button-box-btn">dlaczego my</button>
+                <button class="button-box-btn">kontakt & pomoc</button>
+                <button class="button-box-btn">mobile</button>
+                <button class="button-box-btn">instagram</button>
+                <button class="button-box-btn">facebook</button>
+                <button class="button-box-btn">youtube</button>
+                <button class="button-box-btn button-box-btn-end">warunki poufności</button>
+            </div>
+            <p><button class="button-box-btn footer-copy-right">&copy; Copyright grupa P2 2022 </button>
+            </p>
+        </footer>
+    </div>
+
+
+    <!-- Bars menu -->
+    <div class="bars-menu">
+        <i class="fas fa-times"></i>
+        <button class="bars-menu-btn">Zaloguj się</button>
+        <button class="bars-menu-btn">Zarejestruj się</button>
+    </div>
+
+    <script th:src="@{js/contact-js.js}"></script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKPfg1AtPIp_ACiPT47MU0HL--D61EA_s&callback=initMap&libraries=&v=weekly">
+        </script>
+</body>
+
+</html>

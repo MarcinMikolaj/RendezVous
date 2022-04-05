@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+ <form th:method="post" th:action="@{/register/user/create}" th:object="${user}">
+
+     <div>
+         <input th:field="*{email}" type="text" placeholder="email">
+     </div>
+
+     <div>
+         <input th:field="*{password}" type="text" placeholder="hasło">
+     </div>
+
+     <div>
+         <input th:field="*{nick}" type="text" placeholder="pseudonim">
+     </div>
+
+     <div>
+         <label for="select-gender">Płeć</label>
+         <select th:name="gender" id="select-gender">
+             <option value="">-Wybierz-</option>
+             <option value="man">Meżczyzna</option>
+             <option value="woman">Kobieta</option>
+         </select>
+     </div>
+
+     <div>
+         <label for="select-age">Wiek</label>
+         <input th:field="*{age}" id="select-age" type="text" placeholder="Wiek">
+     </div>
+
+     <div>
+         <label for="check-box-ters-of-use">Tak, Zgadzam się na warunki użytkowania</label>
+         <input th:field="*{termsOfUse}" id="check-box-ters-of-use" type="checkbox">
+     </div>
+
+     <button type="submit">Utwórz konto</button>
+
+ </form>
+
+</body>
+</html>

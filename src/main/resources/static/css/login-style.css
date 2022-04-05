@@ -1,0 +1,218 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--background-color: rgb(252, 252, 252);
+	--left-wrapper-background-color: rgb(255, 255, 255);
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: 'Open Sans', sans-serif;
+	font-family: 'Raleway', sans-serif;
+	background-color: var(--background-color);
+}
+
+.login-wrapper {
+	display: flex;
+	flex-direction: row;
+	border: none;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 0 5px rgb(169, 169, 169);
+}
+
+.left-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--left-wrapper-background-color);
+	width: 600px;
+	height: 800px;
+}
+
+.left-wrapper-center {
+	min-width: 80%;
+}
+
+.describe-text {
+	margin-top: 8px;
+	margin-bottom: 40px;
+	color: rgb(125, 125, 125);
+}
+
+.label {
+	margin-top: 20px;
+	color: rgb(79, 79, 79);
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.input-box {
+	display: flex;
+	flex-direction: row;
+	margin: 10px 0;
+	padding: 15px 10px;
+	border: 1px solid rgb(143, 143, 143);
+	border-radius: 5px;
+}
+.input-box i {
+	margin-right: 10px;
+	color: rgb(143, 143, 143);
+}
+
+.authentication-input {
+	flex-grow: 1;
+	margin-right: 0;
+	border: none;
+}
+.authentication-input:focus {
+	outline: none;
+}
+
+.buttons-box {
+	display: flex;
+	flex-direction: column;
+}
+
+/* forgot password */
+.forgot-password-link {
+	margin-top: 10px;
+	margin-bottom: 15px;
+	font-weight: bold;
+	font-size: 15px;
+	transition: color 0.3s, border-bottom-color 0.3s;
+	cursor: pointer;
+}
+.forgot-password-link:hover {
+	color: rgb(232, 49, 49);
+}
+
+/* buttons */
+.btn {
+	margin: 10px 0;
+	padding: 15px 20px;
+	cursor: pointer;
+	border: none;
+	border-radius: 5px;
+}
+
+.signIn-btn {
+	border: 1px solid black;
+	background-color: black;
+	color: white;
+}
+.signIn-btn:hover {
+	border-color: rgb(232, 49, 49);
+	background-color: rgb(232, 49, 49);
+	color: white;
+}
+
+.google-btn {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid rgb(189, 189, 189);
+	background: transparent;
+	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.google-btn:hover {
+	border-color: black;
+	color: white;
+	background-color: black;
+}
+.fa-google {
+	margin-right: 5px;
+}
+
+/* Create account p */
+
+.create-account-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 40px;
+}
+.create-account-question {
+	font-size: 15px;
+}
+.create-account-link {
+	margin-left: 5px;
+	font-weight: bold;
+	font-size: 15px;
+	border-bottom: 1px solid black;
+	transition: color 0.3s, border-bottom-color 0.3s;
+	cursor: pointer;
+}
+.create-account-link:hover {
+	color: rgb(232, 49, 49);
+	border-bottom-color: rgb(232, 49, 49);
+}
+
+/* Right wrapper */
+
+.right-wrapper {
+	position: relative;
+	width: 600px;
+	height: 800px;
+}
+
+.img-background {
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+.right-wrapper-background-filtr {
+	position: absolute;
+	background-color: rgba(120, 108, 108, 0.331);
+	width: 100%;
+	height: 100%;
+}
+
+.logo {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 38px;
+	color: white;
+	transition: color 0.3s;
+	font-weight: 700;
+}
+
+.vous-vous {
+	font-size: 41px;
+	font-weight: 700;
+}
+
+/* Home link*/
+.home-link {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin-top: 20px;
+	margin-left: 20px;
+	padding: 10px 20px;
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(116, 116, 116);
+	color: rgb(0, 0, 0);
+	transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+	cursor: pointer;
+}
+
+.home-link:hover {
+	border-color: rgb(116, 116, 116);
+	background-color: rgb(116, 116, 116);
+	color: white;
+}

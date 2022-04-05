@@ -1,0 +1,148 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--glowny-kolor-tla: rgb(245, 245, 245);
+	--kolor-tła-prawego-pojemnika: rgb(224, 224, 224);
+	--glowny-kolor-animacji: rgb(255, 145, 0);
+	--kolor-ramek: rgb(199, 199, 199);
+	--swiper-color: rgb(226, 226, 226);
+	--swiper-btn-color: rgb(104, 104, 104);
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: 'Raleway', sans-serif;
+	font-family: 'Roboto', sans-serif;
+	background-color: var(--glowny-kolor-tla);
+}
+
+.panel-wrapper {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	margin: 40px;
+	background-color: var(--glowny-kolor-tla);
+}
+
+/* ------------------------------ Left wrapper ------------------------- */
+.left-wrapper {
+	display: flex;
+	flex-direction: column;
+	margin-right: 30px;
+}
+
+.left-wrapper-menu {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	border-top: 1px solid var(--kolor-ramek);
+}
+
+.menu-btn {
+	display: flex;
+	flex-direction: row;
+	padding: 10px 5px;
+	border: none;
+	background: transparent;
+	color: rgb(59, 59, 59);
+	font-size: 15px;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.menu-btn i {
+	margin-right: 10px;
+}
+.menu-btn:hover {
+	color: var(--glowny-kolor-animacji);
+}
+
+/* ------------------------------ Right wrapper ------------------------- */
+
+.right-wrapper {
+	display: flex;
+	background-color: var(--kolor-tła-prawego-pojemnika);
+}
+
+.browse-candidates-box {
+	display: flex;
+	flex-direction: column;
+}
+
+.preferences-box {
+	display: none;
+}
+
+.message-box {
+	display: none;
+}
+
+.matches-box {
+	display: none;
+	flex-direction: column;"
+}
+
+.profile-settings-box {
+	display: none;
+	flex-direction: column;
+}
+
+/* *********** SWIPER *********** */
+
+.swiper {
+	width: 800px;
+	height: 700px;
+	border-radius: 10px;
+	background-color: var(--swiper-color);
+}
+.swiper-wrapper {
+	align-items: center;
+}
+.swiper-slide {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 500px;
+	height: 700px;
+	border-radius: 10px;
+}
+
+.swiper-slide-img {
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	border-radius: 10px;
+}
+
+.swiper-button-prev {
+	padding: 30px;
+	border-radius: 10px;
+	background-color: white;
+	background-color: rgba(255, 255, 255, 0.6);
+	right: 10px;
+	color: var(--swiper-btn-color) !important;
+	fill: var(--swiper-btn-color) !important;
+	stroke: var(--swiper-btn-color) !important;
+}
+.swiper-button-next {
+	padding: 30px;
+	border-radius: 10px;
+	background-color: white;
+	background-color: rgba(255, 255, 255, 0.6);
+	right: 10px;
+	color: var(--swiper-btn-color) !important;
+	fill: var(--swiper-btn-color) !important;
+	stroke: var(--swiper-btn-color) !important;
+}
+.swiper-pagination-bullet-active {
+	background-color: #000 !important;
+}
