@@ -7,12 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&family=Roboto:ital,wght@0,400;0,900;1,300;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&family=Roboto:wght@300;400;500;700;900&display=swap"
         rel="stylesheet">
     <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
 
      <link rel="stylesheet" th:href="@{css/panel-style.css}" type="text/css">
-     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+<!--    <link rel="stylesheet" href="./panel-style.css">-->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 </head>
 
 <body>
@@ -50,7 +51,7 @@
                     <i class="fas fa-cog"></i>
                     <p>Ustawienia</p>
                 </button>
-                <button class="menu-btn">
+                <button class="menu-btn menu-btn-logout">
                     <i class="fas fa-arrow-left"></i>
                     <p>Wyloguj</p>
                 </button>
@@ -76,9 +77,6 @@
                     <!-- Additional required wrapper -->
                     <div class="swiper-wrapper">
                         <!-- Slides -->
-                        <div class="swiper-slide">Slide 1</div>
-                        <div class="swiper-slide">Slide 2</div>
-                        <div class="swiper-slide">Slide 3</div>
                     </div>
                     <!-- If we need pagination -->
                     <div class="swiper-pagination"></div>
@@ -98,7 +96,7 @@
 
                 <div>
                     <p>O mnie</p>
-                     <p class="viewed-aboutMe"></p>
+                    <p class="viewed-aboutMe"></p>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero illo dolores accusamus ex sed
                         maiores soluta reiciendis optio ab? Doloremque.</p>
                 </div>
@@ -177,24 +175,104 @@
             </div>
 
 
+
+
+
+            <!-- Message Box -->
             <div class="message-box">
 
-                <button class="up" type="default">updateRecipients</button>
+                <div class="left-message-box">
+
+                    <!-- Search recipient box -->
+                    <div class="search-recipient-box">
+                        <div class="search-recipient">
+                            <i class="fas fa-search"></i>
+                            <input class="search-recipient-input" type="text" placeholder="Szukaj użytkowników">
+                        </div>
+                    </div>
 
 
-                <div>
+                    <div class="sort-recipient-box">
+                        <select class="sort-recipient-select" name="" id="">
+                            <option value="">Wszyscy</option>
+                            <option value="">Aktywni</option>
+                            <option value="">Nieaktywni</option>
+                        </select>
 
-                    <label>Who to send the message to?</label>
-                    <input type="text" class="recipient-name-input" placeholder="User will receive the message...">
-                    <label>Your message</label>
-                    <input class="input-field" type="text" placeholder="message" />
-                    <button class="send-btn">send</button>
+                    </div>
+
+                    <!-- Recipient list -->
+                    <ul class="recipient-list-box">
+
+                        <!-- Default recipient box -->
+                        <li style="display: none" class="recipient-box"></li>
+
+                    </ul>
+
+                    <button class="create-pair-link">Znajdź nową parę !</button>
+
+                </div>
+                <div class="right-message-box">
+
+                    <div class="conversation-top">
+                        <div class="conversation-top-name">
+                            <p class="conversation-top-name-p">...</p>
+                            <div class="conversation-top-nam-active"></div>
+                        </div>
+
+                        <div class="conversation-top-icones-box">
+                            <i class="fas fa-video conversation-top-icones-i"></i>
+                            <i class="fas fa-phone-alt conversation-top-icones-i"></i>
+                            <i class="fas fa-ellipsis-h conversation-top-icones-i"></i>
+                        </div>
+                    </div>
+
+                    <div class="conversation-bottom">
+                        <div class="conversation-bottom-left">
+
+                            <ul class="conversation-list">
+
+                                <li class="conversation-li-right">
+                                    <p>Wybierz znajomego i czatuj razem z nim !</p>
+                                </li>
+
+<!--                                TEST-->
+<!--                                <li class="conversation-li-right">-->
+<!--                                    <div>-->
+<!--                                        <p class="g">ok</p>-->
+<!--                                    </div>-->
+<!--                                    <p class="l">20.12.2021 14:32</p>-->
+<!--                                </li>-->
+<!--                                <li class="conversation-li-left">-->
+<!--                                    <img class="conversation-message-img" src="./img/slide-1.jpg" alt="">-->
+<!--                                    <div>-->
+<!--                                        <p class="d">Hejka co tam u cb słychać ?</p>-->
+<!--                                        <p class="c">20.12.2021 14:32</p>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+
+                            </ul>
+
+                            <div class="send-message-wrapper">
+                                <div class="message-sending-panel">
+                                    <input class="input-field" type="text" placeholder="podaj wiadomość" />
+                                    <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="conversation-bottom-right">
+                            <img class="conversation-info-img" src="./img/slide-1.jpg" alt="">
+                            <p>zainteresowania</p>
+                            <p>telephone</p>
+                            <p>emial</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="response">
-                    <p>Tu są twoje wiadomości</p>
-                </div>
-
+            <!-- end Message box -->
             </div>
 
 
@@ -202,6 +280,9 @@
 
 
 
+
+
+            <!-- Matches Box -->
             <div class="matches-box"></div>
 
             <div class="profile-settings-box">
@@ -271,6 +352,7 @@
 
      <script th:src="@{js/stomp-lib.js}"></script>
      <script type="module" th:src="@{js/panel-js.js}"></script>
+<!--    <script type="module" src="./panel-js.js"></script>-->
 </body>
 
 </html>

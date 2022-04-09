@@ -13,22 +13,22 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-//       Definiuje endpoint na które będe udeżał aby dostać sie do kolejki topic
+
         registry.addEndpoint("/chat");
         registry.addEndpoint("/chat").withSockJS();
 
-        registry.addEndpoint("/recipients/update");
-        registry.addEndpoint("/recipients/update").withSockJS();
+        registry.addEndpoint("/recipients");
+        registry.addEndpoint("/recipients").withSockJS();
+
+        registry.addEndpoint("/conversation");
+        registry.addEndpoint("/conversation").withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
 
-       // nazwa brokera
        registry.enableSimpleBroker("/queue/");
 
-       // Dla zewnetrznego dostepu do aplikcaji
-//        Najpierw odwołaj sie do app a pozniej do brokera czyli topic
        registry.setApplicationDestinationPrefixes("/app");
        registry.setUserDestinationPrefix("/users");
     }

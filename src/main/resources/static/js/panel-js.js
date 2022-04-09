@@ -5,6 +5,7 @@ let menuBtnPreferences;
 let menuBtnMessage;
 let menuBtnMatches;
 let menuBtnSettings;
+let menuBtnLogout
 
 // box in right wrapper
 let browseCandidatesBox;
@@ -21,7 +22,7 @@ let rejectBtn;
 // Selected User description
 // let viewedEmail;
 let viewedName;
-let viewedAge
+let viewedAge;
 let viewedAboutMe;
 
 // User Preferences inputs
@@ -43,7 +44,7 @@ let descriptionRelationshipStatus;
 let saveDescriptionBtn;
 
 // User Description Image
-let saveDescriptionImageBtn
+let saveDescriptionImageBtn;
 let descriptionImageInput;
 let singleImgInBase64;
 
@@ -72,6 +73,7 @@ const prepareDOMElementns = () => {
 	menuBtnMessage = document.querySelector('.menu-btn-message');
 	menuBtnMatches = document.querySelector('.menu-btn-matches');
 	menuBtnSettings = document.querySelector('.menu-btn-settings');
+	menuBtnLogout = document.querySelector('.menu-btn-logout');
 
 	// box
 	browseCandidatesBox = document.querySelector('.browse-candidates-box');
@@ -113,7 +115,9 @@ const prepareDOMElementns = () => {
 
 	// User Description Image
 	descriptionImageInput = document.querySelector('.description-image-input');
-	saveDescriptionImageBtn = document.querySelector('.save-description-image-btn');
+	saveDescriptionImageBtn = document.querySelector(
+		'.save-description-image-btn'
+	);
 
 	// Another
 	swiperWrapper = document.querySelector('.swiper-wrapper');
@@ -130,7 +134,6 @@ const prepareDOMEvents = () => {
 	rejectBtn.addEventListener('click', rejectUser);
 	savePreferencesBtn.addEventListener('click', sendUserPreferences);
 
-
 	saveDescriptionBtn.addEventListener('click', sendUserDescription);
 	saveDescriptionImageBtn.addEventListener('click', sendSingleImage);
 
@@ -142,6 +145,7 @@ const prepareDOMEvents = () => {
 	menuBtnMessage.addEventListener('click', menuBtnMessageAction);
 	menuBtnMatches.addEventListener('click', menuBtnMatchesAction);
 	menuBtnSettings.addEventListener('click', menuBtnSettingsAction);
+	menuBtnLogout.addEventListener('click', logout);
 };
 
 const mainFunction = () => {
@@ -237,10 +241,8 @@ const getMyCredentials = () => {
 			myCredentials = response;
 			console.log(response);
 		})
-		.then(() => {
-			connectWebSocket();
-			getUserPreferencesFromServer();
-		})
+		.then(() => connectWebSocket())
+		.then(() => getUserPreferencesFromServer())
 		.then(() => getUserLocationAndSendToServer())
 		.then(() => getNextUserFromServer()) // Get first viewedUser
 		.catch((error) => console.log('err: ', error));
@@ -306,30 +308,29 @@ const sendSingleImage = () => {
 		console.log('e2' + reader.result);
 		singleImgInBase64 = reader.result;
 		sendImgToServer(reader.result);
-	}
+	};
 
 	reader.onerror = function (error) {
 		console.log('Error: ', error);
 	};
 
 	reader.readAsDataURL(descriptionImageInput.files[0]);
-}
+};
 
 // It allows you to send single img(base64) to server
 const sendImgToServer = (imgInBase64) => {
-		fetch("http://localhost:8080/panel/api/picture/update", {
-			method: "POST",
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			'Access-Control-Allow-Origin': "*",
-			body: JSON.stringify({
-				"bytes": imgInBase64,
-			}),
-		})
-			.then(res => console.log(res))
-}
+	fetch('http://localhost:8080/panel/api/picture/update', {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		'Access-Control-Allow-Origin': '*',
+		body: JSON.stringify({
+			bytes: imgInBase64,
+		}),
+	}).then((res) => console.log(res));
+};
 
 // ************************************ Next User *****************************************
 
@@ -391,27 +392,25 @@ const rejectUser = () => {
 // 			swiper.appendSlide(newDiv);
 
 const setViewedUserInView = (viewedUser) => {
-
 	swiper.removeAllSlides();
 
-		viewedUser.pictures.forEach( function (picture, index){
-			let newDiv = document.createElement("div");
-			let pictureAddedToSwiper = new Image();
+	viewedUser.pictures.forEach(function (picture, index) {
+		let newDiv = document.createElement('div');
+		let pictureAddedToSwiper = new Image();
 
-			newDiv.classList.add("swiper-slide");
-			pictureAddedToSwiper.classList.add("swiper-slide-img");
-			pictureAddedToSwiper.src = picture.bytes;
+		newDiv.classList.add('swiper-slide');
+		pictureAddedToSwiper.classList.add('swiper-slide-img');
+		pictureAddedToSwiper.src = picture.bytes;
 
-			newDiv.appendChild(pictureAddedToSwiper);
-			swiper.appendSlide(newDiv);
-		});
+		newDiv.appendChild(pictureAddedToSwiper);
+		swiper.appendSlide(newDiv);
+	});
 
 	swiper.update();
 
 	viewedName.textContent = viewedUser.name;
 	viewedAge.textContent = viewedUser.age;
 	viewedAboutMe.textContent = viewedUser.aboutMeDescription;
-
 };
 
 // ******************** GetLocalisation **********************************
@@ -512,62 +511,205 @@ const setMyUserPreferences = (preferences) => {
 // ********************************* Communicator *****************************
 
 
-
-const inputField = document.querySelector('.input-field');
-const sendBtn = document.querySelector('.send-btn');
-const response = document.querySelector('.response');
-
-const updateRecipientBtn = document.querySelector('.up');
-
-const recipientNameInput = document.querySelector('.recipient-name-input');
-
 let client;
+let recipientWebSocketClient;
+let conversationWebSocketClient;
 
-const send = () => {
-	let text = inputField.value;
-	let username = myCredentials.email;
-	let name = recipientNameInput.value;
-	let quote = {'text':text, 'username':username, 'name': name};
-	client.send("/app/chat", {}, JSON.stringify(quote));
-}
+const recipientListBox = document.querySelector('.recipient-list-box');
+const conversationList = document.querySelector('.conversation-list');
+const inputMessageField = document.querySelector('.input-field');
+const sendMessageBtn = document.querySelector('.send-btn');
+let actualRecipientList;
+let actualRecipient;
+let actualRecipientName = '';
 
+const searchRecipientInput = document.querySelector('.search-recipient-input');
+const conversationTopNameP = document.querySelector('.conversation-top-name-p');
+const conversationInfoImg = document.querySelector('.conversation-info-img');
 
-const updateMessageRecipient = () => {
-	let quote = {'username': myCredentials.email,};
-	client.send("/recipients/update", {}, JSON.stringify(quote));
-}
+const sendMessage = () => {
+
+	let today = new Date();
+	let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+	let quote = {
+		text: inputMessageField.value,
+		username: myCredentials.email,
+		name: actualRecipientName,
+		time: time
+	};
+
+	addRightMessageInPanelChatBox(quote);
+	client.send('/app/chat', {}, JSON.stringify(quote));
+	inputMessageField.value = ''; // clear input
+	conversationList.scrollTop = conversationList.scrollHeight; // Scroll set bottom
+};
+
+// Allows you to send a request for an updated recipient list from the server
+const sendUpdateRequestRecipientList = () => {
+	// update after logged
+	let quote = { username: myCredentials.email };
+	recipientWebSocketClient.send('/app/recipients', {}, JSON.stringify(quote));
+
+	// update periodically
+	let updateMessageRecipientInterval = window.setInterval(function () {
+		let quote = { username: myCredentials.email };
+		recipientWebSocketClient.send('/app/recipients', {}, JSON.stringify(quote));
+	}, 60000);
+};
 
 const connectWebSocket = () => {
-	client = Stomp.client('ws://localhost:8080/chat') //ws - information abut protocol, localhost.. - chat endpoint
-	client.connect({ username: myCredentials.email, }, function (frame){
-		console.log('Web Socket is connected');
+	client = Stomp.client('ws://localhost:8080/chat'); //ws - information abut protocol, localhost.. - chat endpoint
+	client.connect({ username: myCredentials.email }, function (frame) {
 
-		client.subscribe('/users/queue/recipients', function(message){
-			// console.log('DOstałem liste polubionych za pomocą webSocket')
-			// let c = JSON.parse(message.body).email;
-			console.log("kawa")
-			console.log(JSON.parse(message.body));
-			console.log(JSON.parse(message.body).recipientList);
-		})
+		client.subscribe('/users/queue/messages', function (message) {
+			addLeftMessageInPanelChatBox(JSON.parse(message.body));
+			conversationList.scrollTop = conversationList.scrollHeight; // Scroll set bottom
+		});
+	});
 
-		client.subscribe('/users/queue/messages', function(message){
-			showMessage(JSON.parse(message.body).username, JSON.parse(message.body).text, JSON.parse(message.body).time);
+	recipientWebSocketClient = Stomp.client('ws://localhost:8080/recipients');
+	recipientWebSocketClient.connect(
+		{ username: myCredentials.email },
+		function (frame) {
+			client.subscribe('/users/queue/recipients', function (message) {
+				showRecipientsInPanel(JSON.parse(message.body).recipientList);
+				actualRecipientList = JSON.parse(message.body).recipientList;
+			});
 
-		})
+			sendUpdateRequestRecipientList();
+		}
+	);
+
+	conversationWebSocketClient = Stomp.client(
+		'ws://localhost:8080/conversation'
+	);
+	conversationWebSocketClient.connect(
+		{ username: myCredentials.email },
+		function (frame) {
+			client.subscribe('/users/queue/conversation', function (message) {
+				setUpConversationInPanel(JSON.parse(message.body));
+			});
+		}
+	);
+};
+
+// It allows you to set up a conversation with the selected recipient in the panel
+const setUpConversationInPanel = (conversation) => {
+
+	conversationList.innerHTML = ''; // clear conversations
+	conversation.chatMessageList.forEach(function (recipient) {
+
+		// add left message
+		if (recipient.username === actualRecipientName) {
+			addLeftMessageInPanelChatBox(recipient);
+		}
+
+		// add right message
+		if (recipient.username === myCredentials.email) {
+			addRightMessageInPanelChatBox(recipient);
+		}
+	});
+
+	inputMessageField.value = ''; // clear input
+	conversationList.scrollTop = conversationList.scrollHeight; // Scroll set bottom
+
+};
+
+const addLeftMessageInPanelChatBox = (message) => {
+	let li = document.createElement('li');
+	li.classList.add('conversation-li-left');
+	li.innerHTML = `<img class="conversation-message-img" src="${actualRecipient.profileImg.bytes}" alt="">
+                                    <div>
+                                        <p class="d">${message.text}</p>
+                                        <p class="c">${message.time}</p>
+                                    </div>`;
+	conversationList.appendChild(li);
+}
+
+const addRightMessageInPanelChatBox = (message) => {
+	let li = document.createElement('li');
+	li.classList.add('conversation-li-right');
+	li.innerHTML = `<div>
+                       <p class="g">${message.text}</p>
+                    </div>
+                    <p class="l">${message.time}</p>`;
+	conversationList.appendChild(li);
+}
+
+
+// Allows you to display recipients in the user panel
+// example item object
+// ({
+// active: false,
+// email: 'marcin3246a51@o2.pl',
+// lastMessage: null,
+// nick: 'marcin3246',
+// profileImg: Object { bytes: 'imgInBase64'}
+// })
+const showRecipientsInPanel = (recipients) => {
+	recipientListBox.innerHTML = '';
+	recipients.forEach(function (item) {
+		let newLi = document.createElement('li');
+		newLi.innerHTML = `<li id="${item.email}" class="recipient-box">
+                            <div class="recipient-status"></div>
+                            <img class="recipient-img" src="${item.profileImg.bytes}" alt="">
+                            <div class="recipient-box-center">
+                                <p class="recipient-nick">${item.nick}</p>
+                                <p class="recipient-last-message">Hej co u cb słychać ?</p>
+                            </div>
+                            <p class="recipient-last-message-time">5 godz</p>
+                        </li>`;
+		newLi.classList.add('recipient-box');
+		recipientListBox.appendChild(newLi);
+	});
+};
+
+const setActualRecipientConversation = (event) => {
+
+	actualRecipientName = event.target.closest('.recipient-box').id;
+	getActualChosenRecipientByEmail(actualRecipientList, actualRecipientName);
+	conversationTopNameP.textContent = actualRecipient.nick;
+	conversationInfoImg.src = actualRecipient.profileImg.bytes;
+
+	let quote = {
+		ownerEmail: myCredentials.email,
+		recipientEmail: actualRecipientName,
+	};
+	recipientWebSocketClient.send('/app/conversation', {}, JSON.stringify(quote));
+};
+
+const getActualChosenRecipientByEmail = (recipientList, email) => {
+	actualRecipientList.forEach(function (item) {
+		if(item.email === email){
+			actualRecipient = item;
+		}
 	})
 }
 
-const showMessage = (username, text, time) => {
-	let newP = document.createElement('p');
-	newP.textContent = text;
-	response.appendChild(newP);
-	console.log('Otrzymałem wiadomość: ' + username + ' ' + text + ' ' + time);
+sendMessageBtn.addEventListener('click', sendMessage);
+recipientListBox.addEventListener('click', setActualRecipientConversation);
+
+// redirect and logout
+const logout = () => {
+	window.location.href = "http://localhost:8080/logout";
 }
 
-sendBtn.addEventListener('click', send);
-updateRecipientBtn.addEventListener('click', updateMessageRecipient);
-// connectWebsocketBtn.addEventListener('click', connectWebSocket);
+// Search recipient
+const searchRecipient = (e) => {
+	let text = e.target.value.toLowerCase().trim();
 
+	for (const iterator of recipientListBox.children) {
+		if (iterator.textContent.toLowerCase().indexOf(text) !== -1) {
+			iterator.style.display = 'block';
+		} else {
+			iterator.style.display = 'none';
+		}
+	}
+
+}
+
+searchRecipientInput.addEventListener('keyup', searchRecipient);
 
 // Start, DOMContentLoaded
 document.addEventListener('DOMContentLoaded', mainFunction);

@@ -4,18 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.rendezvous.panel.FileManager;
 import project.rendezvous.panel.Picture;
-import project.rendezvous.registration.UserDescription;
-import project.rendezvous.registration.UserDescriptionRepository;
-import project.rendezvous.registration.UserFriends;
-import project.rendezvous.registration.UserFriendsRepository;
-
-import java.util.List;
+import project.rendezvous.registration.*;
 
 @Service
 public class RecipientService {
 
     private UserFriendsRepository userFriendsRepository;
     private UserDescriptionRepository userDescriptionRepository;
+    private UserRepository userRepository;
     private FileManager fileManager;
 
     @Autowired
@@ -33,6 +29,12 @@ public class RecipientService {
         this.fileManager = fileManager;
     }
 
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    // Returns a list of recipients that can be contacted by the user whose identifier is taken as an argument
     public RecipientList getRecipientList(String email){
 
         RecipientList recipientList = new RecipientList();
@@ -43,7 +45,8 @@ public class RecipientService {
 
         userFriends.getFormedPairsWithUsersList().stream()
                 .filter(recipientEmail -> recipientEmail != null)
-                .peek(recipientEmail -> recipientList.getRecipientList().add(createRecipient(recipientEmail))).close();
+                .peek(recipientEmail -> recipientList.getRecipientList().add(createRecipient(recipientEmail)))
+                .count();
 
         return  recipientList;
     }
@@ -51,11 +54,13 @@ public class RecipientService {
     private Recipient createRecipient(String recipientEmail){
 
         UserDescription userDescription = userDescriptionRepository.findByEmail(recipientEmail);
+        User user = userRepository.findByEmail(recipientEmail); // ?
         String path = userDescription.getPathToImgList().get(0);
         Picture picture = fileManager.deserializationObjectAndGetFromDirectory(path);
 
         Recipient recipient = new Recipient();
         recipient.setEmail(userDescription.getEmail());
+        recipient.setNick(user.getNick()); // ?
         recipient.setProfileImg(picture);
         recipient.setActive(false);
 
@@ -63,17 +68,3 @@ public class RecipientService {
     }
 
 }
-
-
-//        for(String recipientEmail: userFriends.getFormedPairsWithUsersList()){
-//
-//            UserDescription userDescription = userDescriptionRepository.findByEmail(recipientEmail);
-//            String path = userDescription.getPathToImgList().get(0);
-//            Picture picture = fileManager.deserializationObjectAndGetFromDirectory(path);
-//
-//            Recipient recipient = new Recipient();
-//            recipient.setEmail(userDescription.getEmail());
-//            recipient.setProfileImg(picture);
-//            recipient.setActive(false);
-//            recipientList.getRecipientList().add(recipient);
-//        }

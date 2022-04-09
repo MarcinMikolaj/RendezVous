@@ -7,11 +7,17 @@ public class ChatMessage  {
     private String text;
     private String time;
 
+    public ChatMessage() {}
+
     public ChatMessage(String name, String username, String text, String time) {
         this.name = name;
         this.text = text;
         this.username = username;
-        this.time = StringUtils.getCurrentTimeStamp();
+        this.time = time;
+    }
+
+    public ChatMessage(String text) {
+        this.text = text;
     }
 
     public String getName() {

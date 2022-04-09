@@ -51,7 +51,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                    .antMatchers("/panel").authenticated()
                 .and()
                    .formLogin().loginPage("/login").permitAll().usernameParameter("username").passwordParameter("password")
-                   .failureUrl("/login-error").permitAll()
+                   .failureUrl("/login-error").permitAll().defaultSuccessUrl("/panel")
                 .and()
                    .logout().permitAll();
     }
