@@ -1,48 +1,123 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejestracja</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" th:href="@{/css/register-style.css}" type="text/css">
+    <!--<link rel="stylesheet" href="./register-style.css">-->
+    <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
+    <div class="wrapper">
 
- <form th:method="post" th:action="@{/register/user/create}" th:object="${user}">
+        <div class="wrapper-left">
 
-     <div>
-         <input th:field="*{email}" type="text" placeholder="email">
-     </div>
+            <form class="register-form" th:method="post" th:action="@{/register/user/create}" th:object="${user}">
 
-     <div>
-         <input th:field="*{password}" type="text" placeholder="hasło">
-     </div>
+                <h1 class="title-big">Dołącz do randkowiczów</h1>
+                <p class="title-small">Rozpocznij nową przygodę i randkuj z tysiącami innych użytkowników !</p>
 
-     <div>
-         <input th:field="*{nick}" type="text" placeholder="pseudonim">
-     </div>
+                <div class="field-cointeiner">
+                    <label>Pseudonim</label>
+                    <div class="input-box">
+                        <i class="fas fa-user"></i>
+                        <input th:field="*{nick}" type="text" placeholder="pseudonim">
+                    </div>
+                    <p class="validation-error" th:if="${#fields.hasErrors('${user.nick}')}" th:errors="${user.nick}">error</p>
+                </div>
 
-     <div>
-         <label for="select-gender">Płeć</label>
-         <select th:name="gender" id="select-gender">
-             <option value="">-Wybierz-</option>
-             <option value="man">Meżczyzna</option>
-             <option value="woman">Kobieta</option>
-         </select>
-     </div>
+                <div class="field-cointeiner">
+                    <label>Email</label>
+                    <div class="input-box">
+                        <i class="fas fa-at"></i>
+                        <input th:field="*{email}" type="text" placeholder="email">
+                    </div>
+                    <p class="validation-error" th:if="${#fields.hasErrors('${user.email}')}" th:errors="${user.email}">error</p>
+                </div>
 
-     <div>
-         <label for="select-age">Wiek</label>
-         <input th:field="*{age}" id="select-age" type="text" placeholder="Wiek">
-     </div>
+                <div class="field-cointeiner">
+                    <label>Hasło</label>
+                    <div class="input-box">
+                        <i class="fas fa-lock"></i>
+                        <input th:field="*{password}" type="password" placeholder="hasło">
+                    </div>
+                    <p class="validation-error" th:if="${#fields.hasErrors('${user.password}')}" th:errors="${user.password}">error</p>
+                </div>
 
-     <div>
-         <label for="check-box-ters-of-use">Tak, Zgadzam się na warunki użytkowania</label>
-         <input th:field="*{termsOfUse}" id="check-box-ters-of-use" type="checkbox">
-     </div>
+                <div class="field-cointeiner">
+                    <label>Powtórz hasło</label>
+                    <div class="input-box">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="powtórz hasło">
+                    </div>
+                </div>
 
-     <button type="submit">Utwórz konto</button>
 
- </form>
+                <div class="field-cointeiner field-cointeiner-center">
+                    <label for="select-gender">Płeć</label>
+                    <select th:name="gender" id="select-gender">
+                        <option value="man">Meżczyzna</option>
+                        <option value="woman">Kobieta</option>
+                    </select>
+                </div>
 
+                <div class="field-cointeiner field-cointeiner-center">
+                    <label for="select-age">Wiek</label>
+                    <input class="slider-input" th:field="*{age}" id="select-age" type="range" min="18" max="80"
+                        placeholder="Wiek" oninput="this.nextElementSibling.value = this.value">
+                    <output>24</output>
+                </div>
+
+                <div class="field-cointeiner field-cointeiner-center">
+                    <input th:field="*{termsOfUse}" id="check-box-ters-of-use" type="checkbox">
+                    <label for="check-box-ters-of-use">Tak, Zgadzam się na warunki użytkowania</label>
+                    <p class="validation-error" th:if="${#fields.hasErrors('${user.termsOfUse}')}" th:errors="${user.termsOfUse}">error</p>
+                </div>
+
+                <button class="register-btn" type="default">Utwórz konto</button>
+
+                <div class="sign-in-box">
+                    <p class="sign-in-question">Masz już konto ?
+                    <p class="sign-in-link">Zaloguj się już teraz.</p>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="wrapper-right">
+
+            <div class="swiper">
+
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img class="swipe-img" th:src="@{/imges/register-swipe-1.jpg}" alt="zdjęcie"></div>
+                    <div class="swiper-slide"><img class="swipe-img" th:src="@{/imges/register-swipe-2.jpg}" alt="zdjęcie"></div>
+                    <div class="swiper-slide"><img class="swipe-img" th:src="@{/imges/register-swipe-3.jpg}" alt="zdjęcie"></div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <div class="swiper-scrollbar"></div>
+            </div>
+
+        </div>
+    </div>
+
+<!--<script type="module" src="./register-js.js"></script>-->
+    <script type="module" th:src="@{/js/register-js.js}"></script>
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-package project.rendezvous.registration;
+package project.rendezvous.registration.userFriends;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

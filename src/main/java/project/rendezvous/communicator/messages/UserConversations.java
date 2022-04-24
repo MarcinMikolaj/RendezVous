@@ -20,6 +20,10 @@ public class UserConversations {
 
     public UserConversations() {}
 
+    public UserConversations(String email) {
+        this.email = email;
+    }
+
     public UserConversations(String email, List<Conversation> conversationList) {
         this.email = email;
         this.conversationList = conversationList;

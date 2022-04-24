@@ -13,7 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 @Constraint(validatedBy = NickExistValidator.class)
 public @interface NickExist {
 
-    String message() default "this nick already exists";
+    String message() default "- ten pseudonim jest już zajęty.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default{};
 }

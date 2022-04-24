@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = EmailValidator.class)
 public @interface Email {
 
-    String message() default "Invalid email address provided";
+    String message() default "- musisz podać poprawny adres email.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default{};
 }

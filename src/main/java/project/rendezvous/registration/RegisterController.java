@@ -1,5 +1,6 @@
 package project.rendezvous.registration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,13 @@ import java.util.List;
 @Controller
 public class RegisterController {
 
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping(path = "/register")
     public String registerGet(Model model){
 
@@ -26,15 +34,14 @@ public class RegisterController {
     public String getAccount(@Valid @ModelAttribute User user, BindingResult result){
 
         if(result.hasErrors()){
-
             List<ObjectError> errors = result.getAllErrors();
             errors.forEach(error -> System.out.println(error.getDefaultMessage()));
             return "register";
 
         }else{
-
-            System.out.println(user.toString());
-            return "redirect:/register";
+//            System.out.println(user.toString());
+            userService.createAccount(user);
+            return "redirect:/panel";
 
         }
 

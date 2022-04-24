@@ -3,11 +3,15 @@ package project.rendezvous.panel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import project.rendezvous.ConsoleColors;
+import other.ConsoleColors;
 import project.rendezvous.panel.localization.GeoLocalization;
 import project.rendezvous.panel.localization.GeoLocalizationRepository;
+import project.rendezvous.panel.localization.GeoLocalizationService;
 import project.rendezvous.panel.preferences.UserPreferences;
 import project.rendezvous.registration.*;
+import project.rendezvous.registration.userDescription.UserDescription;
+import project.rendezvous.registration.userDescription.UserDescriptionRepository;
+import project.rendezvous.registration.UserRepository;
 
 import java.security.Principal;
 
@@ -18,6 +22,7 @@ public class PanelRestController {
     private PanelService panelService;
     private UserDescriptionRepository userDescriptionRepository;
     private GeoLocalizationRepository geoLocalizationRepository;
+    private GeoLocalizationService geoLocalizationService;
     private FileManager fileManager;
 
     @Autowired
@@ -41,6 +46,11 @@ public class PanelRestController {
     }
 
     @Autowired
+    public void setGeoLocalizationService(GeoLocalizationService geoLocalizationService) {
+        this.geoLocalizationService = geoLocalizationService;
+    }
+
+    @Autowired
     public void setFileManager(FileManager fileManager){
         this.fileManager = fileManager;
     }
@@ -60,10 +70,23 @@ public class PanelRestController {
         }
     }
 
+    // Allows you to send 'userDescription' to actual logged user
     @RequestMapping(path="panel/api/userDescription/send", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public UserDescription sendUserDescription(Principal principal){
-        return userDescriptionRepository.findByEmail(principal.getName());
+
+        UserDescription userDescription = userDescriptionRepository.findByEmail(principal.getName());
+
+        if(!userDescription.getPathToImgList().isEmpty()){
+            for(String path: userDescription.getPathToImgList()){
+                Picture picture = fileManager.deserializationObjectAndGetFromDirectory(path);
+                userDescription.getPictures().add(picture);
+            }
+        }else{
+            System.out.println(ConsoleColors.YELLOW + "List is empty" + ConsoleColors.RESET);
+        }
+
+        return userDescription;
     }
 
     @RequestMapping(path = "/panel/api/userDescription/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -87,19 +110,21 @@ public class PanelRestController {
 
         UserDescription userDescription = panelService.getNextUserDescription(principal.getName());
 
+        GeoLocalization firstLocalization = geoLocalizationRepository.findByEmail(principal.getName());
+        GeoLocalization secondLocalization = geoLocalizationRepository.findByEmail(userDescription.getEmail());
+
+        int kilometersAway = geoLocalizationService.getDistanceBetweenUsers(firstLocalization, secondLocalization);
+
+        userDescription.setKilometersAway(kilometersAway);
+
         if(!userDescription.getPathToImgList().isEmpty()){
             for(String path: userDescription.getPathToImgList()){
                 Picture picture = fileManager.deserializationObjectAndGetFromDirectory(path);
                 userDescription.getPictures().add(picture);
-//                System.out.println("Pobrałem: " + picture.getBytes());
             }
         }else{
-            System.out.println(ConsoleColors.YELLOW + "Lista jest pusta" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.YELLOW + "List is empty" + ConsoleColors.RESET);
         }
-
-
-
-        System.out.println("Wysyłam kolejnego kandydata" + userDescription.toString());
 
         return userDescription;
     }

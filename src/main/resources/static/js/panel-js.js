@@ -1,11 +1,30 @@
 import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js';
 
+let panelWrapper;
+let leftMessageBox;
+let rightMessageBox;
+
+// menu btns
 let menuBtnBrowseCandidates;
 let menuBtnPreferences;
 let menuBtnMessage;
 let menuBtnMatches;
 let menuBtnSettings;
-let menuBtnLogout
+let menuBtnLogout;
+let sidebarUserImg;
+let sidebarUserName;
+
+// mobile Menu
+let mobileMenuBtnBrowseCandidates;
+let mobileMenuBtnPreferences;
+let mobileMenuBtnMessage;
+let mobileMenuBtnMatches;
+let mobileMenuBtnSettings;
+let mobileMenuBtnLogout;
+let openMobileMenuBtn;
+let closeMobileMenuBtn;
+let mobileMenu; //mobile menu box
+let showRecipientsInMobileBtn;
 
 // box in right wrapper
 let browseCandidatesBox;
@@ -24,6 +43,10 @@ let rejectBtn;
 let viewedName;
 let viewedAge;
 let viewedAboutMe;
+let viewedKilometersAway;
+let viewedUniversity;
+let viewedCity;
+let viewedWork;
 
 // User Preferences inputs
 let selectGender;
@@ -42,11 +65,21 @@ let descriptionAboutMe;
 let descriptionSexualOrientation;
 let descriptionRelationshipStatus;
 let saveDescriptionBtn;
+let descriptionMobileTopImg;
 
 // User Description Image
 let saveDescriptionImageBtn;
 let descriptionImageInput;
 let singleImgInBase64;
+
+// Recipient preview
+let previewImg;
+let previewName;
+let previewAge;
+let previewUniversity;
+let previewCity;
+let previewWork;
+let previewKilometersAway;
 
 // User Localization
 let latitude; // Szerokość geograficzna
@@ -65,15 +98,32 @@ let viewedUser = {
 }; // Information about the currently viewed user
 
 const prepareDOMElementns = () => {
+	panelWrapper = document.querySelector('.panel-wrapper');
+	leftMessageBox = document.querySelector('.left-message-box');
+	rightMessageBox = document.querySelector('.right-message-box');
+
 	// Menu buttons
-	menuBtnBrowseCandidates = document.querySelector(
-		'.menu-btn-browse-candidates'
-	);
+	menuBtnBrowseCandidates = document.querySelector('.menu-btn-browse-candidates');
 	menuBtnPreferences = document.querySelector('.menu-btn-preferences');
 	menuBtnMessage = document.querySelector('.menu-btn-message');
 	menuBtnMatches = document.querySelector('.menu-btn-matches');
 	menuBtnSettings = document.querySelector('.menu-btn-settings');
 	menuBtnLogout = document.querySelector('.menu-btn-logout');
+	sidebarUserImg = document.querySelector('.sidebar-user-img');
+	sidebarUserName = document.querySelector('.sidebar-user-name');
+
+	// Mobile menu
+	 mobileMenuBtnBrowseCandidates = document.querySelector('.mobile-menu-btn-browse-candidates');
+	 mobileMenuBtnPreferences= document.querySelector('.mobile-menu-btn-preferences');
+	 mobileMenuBtnMessage= document.querySelector('.mobile-menu-btn-message');
+	 mobileMenuBtnMatches= document.querySelector('.mobile-menu-btn-matches');
+	 mobileMenuBtnSettings= document.querySelector('.mobile-menu-btn-settings');
+	 mobileMenuBtnLogout= document.querySelector('.mobile-menu-btn-logout');
+
+	 openMobileMenuBtn = document.querySelector('.open-mobile-menu-btn');
+	closeMobileMenuBtn = document.querySelector('.close-mobile-menu-btn');
+	mobileMenu = document.querySelector('.mobile-menu');
+	showRecipientsInMobileBtn = document.querySelector('.show-recipient-btn');
 
 	// box
 	browseCandidatesBox = document.querySelector('.browse-candidates-box');
@@ -108,10 +158,20 @@ const prepareDOMElementns = () => {
 	descriptionSexualOrientation = document.querySelector(
 		'.description-sexual-orientation'
 	);
+	descriptionMobileTopImg = document.querySelector('.description-mobile-top-img');
 	descriptionRelationshipStatus = document.querySelector(
 		'.description-relationship-status'
 	);
 	saveDescriptionBtn = document.querySelector('.save-description-btn');
+
+	// Recipient preview
+	previewImg = document.querySelector('.preview-img');
+	previewName = document.querySelector('.preview-name');
+	previewAge = document.querySelector('.preview-age');
+	previewUniversity = document.querySelector('.preview-university');
+	previewCity = document.querySelector('.preview-city');
+	previewWork = document.querySelector('.preview-work');
+	previewKilometersAway = document.querySelector('.preview-KilometersAway');
 
 	// User Description Image
 	descriptionImageInput = document.querySelector('.description-image-input');
@@ -127,6 +187,10 @@ const prepareDOMElementns = () => {
 	viewedName = document.querySelector('.viewed-name');
 	viewedAge = document.querySelector('.viewed-age');
 	viewedAboutMe = document.querySelector('.viewed-aboutMe');
+	viewedKilometersAway = document.querySelector('.viewedKilometersAway');
+	viewedUniversity = document.querySelector('.viewed-university');
+	viewedCity = document.querySelector('.viewed-city');
+	viewedWork = document.querySelector('.viewed-work');
 };
 
 const prepareDOMEvents = () => {
@@ -141,11 +205,23 @@ const prepareDOMEvents = () => {
 		'click',
 		menuBtnBrowseCandidatesAction
 	);
+
 	menuBtnPreferences.addEventListener('click', menuBtnPreferencesAction);
 	menuBtnMessage.addEventListener('click', menuBtnMessageAction);
 	menuBtnMatches.addEventListener('click', menuBtnMatchesAction);
 	menuBtnSettings.addEventListener('click', menuBtnSettingsAction);
 	menuBtnLogout.addEventListener('click', logout);
+
+	// Mobile
+	mobileMenuBtnBrowseCandidates.addEventListener('click', menuBtnBrowseCandidatesAction);
+	mobileMenuBtnPreferences.addEventListener('click', menuBtnPreferencesAction);
+	mobileMenuBtnMessage.addEventListener('click', menuBtnMessageAction);
+	mobileMenuBtnMatches.addEventListener('click', menuBtnMatchesAction);
+	mobileMenuBtnSettings.addEventListener('click', menuBtnSettingsAction);
+	mobileMenuBtnLogout.addEventListener('click', logout);
+	openMobileMenuBtn.addEventListener('click', showMobileMenu);
+	closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+	showRecipientsInMobileBtn.addEventListener('click', showRecipientsInMobile);
 };
 
 const mainFunction = () => {
@@ -167,22 +243,44 @@ const resetAllBox = () => {
 const menuBtnBrowseCandidatesAction = () => {
 	resetAllBox();
 	browseCandidatesBox.style.display = 'flex';
+	closeMobileMenu();
 };
 const menuBtnPreferencesAction = () => {
 	resetAllBox();
 	preferencesBox.style.display = 'flex';
+	closeMobileMenu();
 };
 const menuBtnMessageAction = () => {
 	resetAllBox();
 	messageBox.style.display = 'flex';
+	closeMobileMenu();
 };
 const menuBtnMatchesAction = () => {
 	resetAllBox();
 	matchesBox.style.display = 'flex';
+	closeMobileMenu();
 };
 const menuBtnSettingsAction = () => {
 	resetAllBox();
 	profileSettingsBox.style.display = 'flex';
+	closeMobileMenu();
+};
+
+const showMobileMenu = () => {
+	mobileMenu.style.display = 'flex';
+	panelWrapper.style.display = 'none';
+};
+
+const closeMobileMenu = () => {
+	mobileMenu.style.display = 'none';
+	panelWrapper.style.display = 'flex';
+};
+
+const showRecipientsInMobile = () => {
+	rightMessageBox.style.display = 'none';
+	leftMessageBox.style.display = 'flex';
+	leftMessageBox.style['flex-grow'] = '1';
+	leftMessageBox.style['max-width'] = '1000px';
 };
 
 // ********** Swipowanie uzytkowników **********
@@ -191,19 +289,17 @@ const swiper = new Swiper('.swiper', {
 	// Optional parameters
 	direction: 'horizontal',
 	loop: true,
-	speed: 550,
-	spaceBetween: 100,
+	speed: 150,
+	spaceBetween: 0,
+
 	effect: 'coverflow',
 	coverflowEffect: {
-		depth: 800,
-		modifier: 1,
-		rotate: 30,
-		slideshadow: true,
+		rotate: 0,
+		slideShadows: false,
 	},
 
-	grabCursor: false,
-
-	slidesPerView: 1.4,
+	grabCursor: true,
+	slidesPerView: 1,
 	centeredSlides: true,
 
 	autoplay: {
@@ -267,12 +363,25 @@ const getMyUserDescription = () => {
 };
 
 const setMyUserDescription = (myUserDescription) => {
+
+	// User description box
 	descriptionName.value = myUserDescription.name;
 	descriptionGender.value = myUserDescription.gender;
 	descriptionAge.value = myUserDescription.age;
 	descriptionAboutMe.value = myUserDescription.aboutMeDescription;
 	descriptionSexualOrientation.value = myUserDescription.sexualOrientation;
 	descriptionRelationshipStatus.value = myUserDescription.relationshipStatus;
+
+	if(myUserDescription.pictures[0].bytes){
+		descriptionMobileTopImg.src = myUserDescription.pictures[0].bytes;
+	}
+
+    // Sidebar user name and img
+	sidebarUserName.innerHTML = `${myUserDescription.name}`;
+	if(myUserDescription.pictures[0].bytes){
+		sidebarUserImg.src = myUserDescription.pictures[0].bytes;
+	}
+
 };
 
 // Send UserDescription object to server
@@ -380,17 +489,6 @@ const rejectUser = () => {
 	updateUserLikesAndGetNext('reject');
 };
 
-//viewedUser.pictures.forEach( function (item, index){
-// 			let newDiv = document.createElement("div");
-// 			let pictureAddedToSwiper = new Image();
-//
-// 			newDiv.classList.add("swiper-slide");
-// 			pictureAddedToSwiper.classList.add("swiper-slide-img");
-// 			pictureAddedToSwiper.src = viewedUser.pictures[0].bytes;
-//          console.log('NNNNNNNNNNNNN   ' + viewedUser.pictures[0].bytes)
-// 			newDiv.appendChild(pictureAddedToSwiper);
-// 			swiper.appendSlide(newDiv);
-
 const setViewedUserInView = (viewedUser) => {
 	swiper.removeAllSlides();
 
@@ -411,6 +509,10 @@ const setViewedUserInView = (viewedUser) => {
 	viewedName.textContent = viewedUser.name;
 	viewedAge.textContent = viewedUser.age;
 	viewedAboutMe.textContent = viewedUser.aboutMeDescription;
+	viewedKilometersAway.textContent = viewedUser.kilometersAway + ' km';
+	viewedCity.textContent = viewedUser.city;
+	viewedUniversity.textContent = viewedUser.university;
+	viewedWork.textContent = viewedUser.work;
 };
 
 // ******************** GetLocalisation **********************************
@@ -510,14 +612,13 @@ const setMyUserPreferences = (preferences) => {
 
 // ********************************* Communicator *****************************
 
-
 let client;
 let recipientWebSocketClient;
 let conversationWebSocketClient;
 
 const recipientListBox = document.querySelector('.recipient-list-box');
 const conversationList = document.querySelector('.conversation-list');
-const inputMessageField = document.querySelector('.input-field');
+const inputMessageField = document.querySelector('.input-message-field');
 const sendMessageBtn = document.querySelector('.send-btn');
 let actualRecipientList;
 let actualRecipient;
@@ -525,18 +626,18 @@ let actualRecipientName = '';
 
 const searchRecipientInput = document.querySelector('.search-recipient-input');
 const conversationTopNameP = document.querySelector('.conversation-top-name-p');
-const conversationInfoImg = document.querySelector('.conversation-info-img');
+// const conversationInfoImg = document.querySelector('.conversation-info-img');
 
 const sendMessage = () => {
-
 	let today = new Date();
-	let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	let time =
+		today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
 	let quote = {
 		text: inputMessageField.value,
 		username: myCredentials.email,
 		name: actualRecipientName,
-		time: time
+		time: time,
 	};
 
 	addRightMessageInPanelChatBox(quote);
@@ -561,7 +662,6 @@ const sendUpdateRequestRecipientList = () => {
 const connectWebSocket = () => {
 	client = Stomp.client('ws://localhost:8080/chat'); //ws - information abut protocol, localhost.. - chat endpoint
 	client.connect({ username: myCredentials.email }, function (frame) {
-
 		client.subscribe('/users/queue/messages', function (message) {
 			addLeftMessageInPanelChatBox(JSON.parse(message.body));
 			conversationList.scrollTop = conversationList.scrollHeight; // Scroll set bottom
@@ -596,10 +696,8 @@ const connectWebSocket = () => {
 
 // It allows you to set up a conversation with the selected recipient in the panel
 const setUpConversationInPanel = (conversation) => {
-
 	conversationList.innerHTML = ''; // clear conversations
 	conversation.chatMessageList.forEach(function (recipient) {
-
 		// add left message
 		if (recipient.username === actualRecipientName) {
 			addLeftMessageInPanelChatBox(recipient);
@@ -613,7 +711,6 @@ const setUpConversationInPanel = (conversation) => {
 
 	inputMessageField.value = ''; // clear input
 	conversationList.scrollTop = conversationList.scrollHeight; // Scroll set bottom
-
 };
 
 const addLeftMessageInPanelChatBox = (message) => {
@@ -625,7 +722,7 @@ const addLeftMessageInPanelChatBox = (message) => {
                                         <p class="c">${message.time}</p>
                                     </div>`;
 	conversationList.appendChild(li);
-}
+};
 
 const addRightMessageInPanelChatBox = (message) => {
 	let li = document.createElement('li');
@@ -635,8 +732,7 @@ const addRightMessageInPanelChatBox = (message) => {
                     </div>
                     <p class="l">${message.time}</p>`;
 	conversationList.appendChild(li);
-}
-
+};
 
 // Allows you to display recipients in the user panel
 // example item object
@@ -656,44 +752,59 @@ const showRecipientsInPanel = (recipients) => {
                             <img class="recipient-img" src="${item.profileImg.bytes}" alt="">
                             <div class="recipient-box-center">
                                 <p class="recipient-nick">${item.nick}</p>
-                                <p class="recipient-last-message">Hej co u cb słychać ?</p>
+                                <p class="recipient-last-message">${item.lastMessage.text}</p>
                             </div>
-                            <p class="recipient-last-message-time">5 godz</p>
+                            <p class="recipient-last-message-time">${item.lastMessage.time}</p>
                         </li>`;
 		newLi.classList.add('recipient-box');
 		recipientListBox.appendChild(newLi);
 	});
 };
 
-const setActualRecipientConversation = (event) => {
+// It allows you display recipient in 'preview panel'
+const showRecipientInPreviewPanel = (actualRecipient) => {
 
+	previewImg.src = actualRecipient.profileImg.bytes;
+	previewName.textContent = actualRecipient.name + ' ';
+	previewAge.textContent = actualRecipient.age;
+	previewCity.textContent = actualRecipient.city;
+	previewWork.textContent = actualRecipient.work;
+	previewUniversity.textContent = actualRecipient.university;
+
+	// previewKilometersAway.textContent = actualRecipient.kilometersAway + ' km';
+
+}
+
+const setActualRecipientConversation = (event) => {
 	actualRecipientName = event.target.closest('.recipient-box').id;
 	getActualChosenRecipientByEmail(actualRecipientList, actualRecipientName);
 	conversationTopNameP.textContent = actualRecipient.nick;
-	conversationInfoImg.src = actualRecipient.profileImg.bytes;
-
+	// conversationInfoImg.src = actualRecipient.profileImg.bytes;
+	showRecipientInPreviewPanel(actualRecipient);
 	let quote = {
 		ownerEmail: myCredentials.email,
 		recipientEmail: actualRecipientName,
 	};
 	recipientWebSocketClient.send('/app/conversation', {}, JSON.stringify(quote));
+
+	if (window.innerWidth < 800) {
+		rightMessageBox.style.display = 'flex';
+		leftMessageBox.style.display = 'none';
+	}
 };
 
 const getActualChosenRecipientByEmail = (recipientList, email) => {
 	actualRecipientList.forEach(function (item) {
-		if(item.email === email){
+		if (item.email === email) {
 			actualRecipient = item;
 		}
-	})
-}
-
-sendMessageBtn.addEventListener('click', sendMessage);
-recipientListBox.addEventListener('click', setActualRecipientConversation);
+	});
+};
 
 // redirect and logout
 const logout = () => {
-	window.location.href = "http://localhost:8080/logout";
-}
+	window.location.href = 'http://localhost:8080/logout';
+};
 
 // Search recipient
 const searchRecipient = (e) => {
@@ -706,9 +817,15 @@ const searchRecipient = (e) => {
 			iterator.style.display = 'none';
 		}
 	}
+};
 
-}
-
+sendMessageBtn.addEventListener('click', sendMessage);
+inputMessageField.addEventListener('keyup', function (event) {
+	if (event.keyCode === 13) {
+		sendMessage();
+	}
+});
+recipientListBox.addEventListener('click', setActualRecipientConversation);
 searchRecipientInput.addEventListener('keyup', searchRecipient);
 
 // Start, DOMContentLoaded

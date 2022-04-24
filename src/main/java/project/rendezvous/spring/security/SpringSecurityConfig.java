@@ -45,6 +45,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                    .antMatchers("/resources/**").permitAll()
                    .antMatchers(HttpMethod.GET, "/home").permitAll()
+                   .antMatchers(HttpMethod.GET, "/register").permitAll()
+                   .antMatchers(HttpMethod.POST, "/register").permitAll()
                    .antMatchers(HttpMethod.GET, "/contact").permitAll()
                    .antMatchers(HttpMethod.POST, "/contact").permitAll()
                    .antMatchers(HttpMethod.POST, "/test").permitAll()

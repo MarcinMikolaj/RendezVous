@@ -1,4 +1,4 @@
-package project.rendezvous;
+package other;
 
 public class ConsoleColors {
 

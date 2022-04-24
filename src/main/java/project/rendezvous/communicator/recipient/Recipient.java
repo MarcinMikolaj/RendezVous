@@ -15,6 +15,14 @@ public class Recipient {
     // Candidate photo
     private Picture profileImg;
 
+    private String name;
+    private int age;
+    private String work;
+    private String university;
+    private String city;
+    // Set only when sending the object to the client
+    private int kilometersAway;
+
     // Whether the candidate is currently logged in
     boolean isActive;
 
@@ -69,6 +77,54 @@ public class Recipient {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public String getWork() {
+        return work;
+    }
+
+    public void setWork(String work) {
+        this.work = work;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getKilometersAway() {
+        return kilometersAway;
+    }
+
+    public void setKilometersAway(int kilometersAway) {
+        this.kilometersAway = kilometersAway;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     @Override

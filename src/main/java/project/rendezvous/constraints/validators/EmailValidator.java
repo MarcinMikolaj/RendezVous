@@ -19,10 +19,13 @@ public class EmailValidator implements ConstraintValidator<Email, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
+        if(value == null || value.length() <= 0)
+            return false;
+
         Pattern compiledPattern = Pattern.compile(emailRegex);
         Matcher matcher = compiledPattern.matcher(value);
 
-        if(value == null || value.length() <= 0 || matcher.matches() == false){
+        if(matcher.matches() == false){
             return false;
         }else{
             return true;

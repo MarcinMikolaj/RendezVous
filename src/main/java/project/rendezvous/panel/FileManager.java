@@ -2,9 +2,9 @@ package project.rendezvous.panel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.rendezvous.ConsoleColors;
-import project.rendezvous.registration.UserDescription;
-import project.rendezvous.registration.UserDescriptionRepository;
+import other.ConsoleColors;
+import project.rendezvous.registration.userDescription.UserDescription;
+import project.rendezvous.registration.userDescription.UserDescriptionRepository;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

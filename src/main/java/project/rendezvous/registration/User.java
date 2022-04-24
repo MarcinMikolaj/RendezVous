@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @Password
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "- pseudonim nie może być pusty")
     @NickExist
     private String nick;
 
@@ -39,7 +39,7 @@ public class User implements UserDetails {
     @Min(value = 18)
     private int age;
 
-    @AssertTrue
+    @AssertTrue(message = "- musisz zaakceptować regulamin")
     private boolean termsOfUse;
 
     private String role;

@@ -8,6 +8,11 @@ import project.rendezvous.panel.localization.GeoLocalizationService;
 import project.rendezvous.panel.preferences.UserPreferences;
 import project.rendezvous.panel.preferences.UserPreferencesRepository;
 import project.rendezvous.registration.*;
+import project.rendezvous.registration.userDescription.UserDescription;
+import project.rendezvous.registration.userDescription.UserDescriptionRepository;
+import project.rendezvous.registration.userFriends.UserFriends;
+import project.rendezvous.registration.userFriends.UserFriendsRepository;
+import project.rendezvous.registration.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

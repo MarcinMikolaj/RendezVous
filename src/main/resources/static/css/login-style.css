@@ -11,36 +11,41 @@
 
 body {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	padding: 5px 5px;
 	font-family: 'Open Sans', sans-serif;
 	font-family: 'Raleway', sans-serif;
 	background-color: var(--background-color);
 }
 
-.login-wrapper {
+.wrapper {
 	display: flex;
 	flex-direction: row;
+	width: 1200px;
+	height: 85%;
+	padding: 20px 15px;
 	border: none;
 	border-radius: 5px;
-	overflow: hidden;
-	box-shadow: 0 0 5px rgb(169, 169, 169);
 }
 
-.left-wrapper {
+.wrapper-left {
+	flex-grow: 1;
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	background-color: var(--left-wrapper-background-color);
-	width: 600px;
-	height: 800px;
+	width: 50%;
+	height: 100%;
+	overflow-y: auto;
+	overflow-wrap: break-word;
+	min-width: 0;
 }
 
-.left-wrapper-center {
-	min-width: 80%;
+h1 {
+	margin-top: 20px;
 }
 
 .describe-text {
@@ -54,6 +59,13 @@ body {
 	color: rgb(79, 79, 79);
 	font-weight: bold;
 	font-size: 13px;
+}
+
+.login-page-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 90%;
 }
 
 .input-box {
@@ -140,9 +152,10 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin-top: 40px;
+	margin: 30px 0;
 }
 .create-account-question {
+	margin-left: 5px;
 	font-size: 15px;
 }
 .create-account-link {
@@ -160,24 +173,28 @@ body {
 
 /* Right wrapper */
 
-.right-wrapper {
+.wrapper-right {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	position: relative;
-	width: 600px;
-	height: 800px;
+	width: 50%;
+	height: 100%;
 }
 
 .img-background {
 	width: 100%;
 	height: 100%;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
+	border-radius: 20px;
 }
-.right-wrapper-background-filtr {
+.wrapper-right-background-filtr {
 	position: absolute;
 	background-color: rgba(120, 108, 108, 0.331);
 	width: 100%;
 	height: 100%;
+	border-radius: 20px;
 }
 
 .logo {
@@ -215,4 +232,63 @@ body {
 	border-color: rgb(116, 116, 116);
 	background-color: rgb(116, 116, 116);
 	color: white;
+}
+
+@media (max-width: 1250px) {
+	.wrapper {
+		flex-direction: column-reverse;
+		width: 950px;
+		height: 100vh;
+		border-radius: 0;
+	}
+	.wrapper-right {
+		height: 35%;
+		width: 100%;
+	}
+	.wrapper-left {
+		margin: 10px 0;
+		height: 50%;
+		width: 100%;
+	}
+	.login-page-form {
+		height: 100%;
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 550px) {
+	.wrapper-right {
+		max-height: 250px;
+	}
+	.logo {
+		font-size: 28px;
+	}
+	.vous-vous {
+		font-size: 31px;
+	}
+	.create-account-box {
+		flex-direction: column;
+		text-align: center;
+	}
+	.create-account-link {
+		border-bottom: none;
+	}
+}
+
+@media (max-width: 400px) {
+	.logo {
+		font-size: 18px;
+	}
+	.vous-vous {
+		font-size: 21px;
+	}
+	h1 {
+		font-size: 22px;
+		text-align: center;
+	}
+	.describe-text {
+		font-size: 14px;
+		text-align: center;
+	}
+
 }

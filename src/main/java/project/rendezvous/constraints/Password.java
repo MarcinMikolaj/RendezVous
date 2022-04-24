@@ -21,7 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface Password {
 
-    String message() default "Invalid password provided";
+    String message() default "- użyj co najmniej ośmiu znaków, w tym jednocześnie dużej i małej litery, cyfry oraz symbolu.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default{};
     boolean isEnable() default true;

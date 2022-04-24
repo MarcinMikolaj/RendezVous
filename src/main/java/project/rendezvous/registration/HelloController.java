@@ -1,4 +1,4 @@
-package project.rendezvous;
+package project.rendezvous.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,16 +9,20 @@ import project.rendezvous.communicator.messages.Conversation;
 import project.rendezvous.communicator.messages.UserConversationRepository;
 import project.rendezvous.communicator.messages.UserConversations;
 import project.rendezvous.panel.FileManager;
-import project.rendezvous.panel.Picture;
 import project.rendezvous.panel.localization.GeoLocalization;
 import project.rendezvous.panel.localization.GeoLocalizationRepository;
 import project.rendezvous.panel.localization.GeoLocalizationService;
 import project.rendezvous.panel.preferences.UserPreferences;
 import project.rendezvous.panel.preferences.UserPreferencesRepository;
-import project.rendezvous.registration.*;
+import project.rendezvous.registration.User;
+import project.rendezvous.registration.UserRepository;
+import project.rendezvous.registration.userDescription.UserDescription;
+import project.rendezvous.registration.userDescription.UserDescriptionRepository;
+import project.rendezvous.registration.userFriends.UserFriends;
+import project.rendezvous.registration.userFriends.UserFriendsRepository;
 
-import java.io.File;
 
+// Create test users
 @Controller
 public class HelloController {
 
@@ -90,7 +94,6 @@ public class HelloController {
         return user;
     }
 
-
     @GetMapping(value="/m")
     public String m(){
         System.out.println("MongoDB test");
@@ -142,6 +145,12 @@ public class HelloController {
 
         UserDescription userDescription2 = new UserDescription("bakłażanek23@gmail.com", "bakłażanek23", "man", 18, "hetero", "single" ,"tu jest mój opis");
         UserPreferences userPreferences2 = new UserPreferences("bakłażanek23@gmail.com", "all", 18, 80, 160, "all", "all");
+
+        userDescription2.setCity("Krynica");
+        userDescription2.setUniversity("PWSZ Nowy Sącz");
+        userDescription2.setWork("Informatyk");
+        userDescription2.setInterested("To jest przesłane od serwera ");
+
         //  49.703341514153756, 20.420093746602387 Biegonice
         GeoLocalization geoLocalization2 = new GeoLocalization("bakłażanek23@gmail.com", 49.581242, 20.668631);
         userDescription2.getPathToImgList().add("C:\\Users\\Hawke\\Desktop\\rendezVous\\disk\\bakłażanek23@gmail.com\\bakłażanek23@gmail.com-img-0");
@@ -216,7 +225,6 @@ public class HelloController {
         UserConversations userConversations4 = new UserConversations();
         userConversations4.setEmail("agent67@gmail.com");
 
-
         user1.setPassword(passwordEncoder.encode(user1.getPassword()));
         userRepository.save(user1);
         userFriendsRepository.save(userFriends1);
@@ -248,25 +256,6 @@ public class HelloController {
         userPreferencesRepository.save(userPreferences4);
         geoLocalizationRepository.save(geoLocalization4);
         userConversationRepository.save(userConversations4);
-
-//        boolean result1 = userRepository.existsByEmail("marcin3246a52@o2.pl");
-//        System.out.println("1 " + result1);
-//
-//        boolean result2 = userRepository.existsByEmail("marcin3246a92@o2.pl");
-//        System.out.println("2 " + result2);
-//
-//        boolean result3 = userRepository.existsByNick("ciasna karolina");
-//        System.out.println("3 " + result3);
-//
-//        boolean result4 = userRepository.existsByNick("ciana karolina");
-//        System.out.println("4 " + result4);
-//
-//        User user = userRepository.findByEmail("marcin3246a51@o2.pl");
-//        System.out.println(user.toString());
-
-//        List<User> getUsers = userRepository.findByAgeBetween(18,23);
-//        System.out.println(getUsers.size());
-//        getUsers.forEach(user -> System.out.println(user.toString()));
 
         return "test";
     }

@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = EmailExistValidator.class)
 public @interface EmailExist {
 
-    String message() default "this email already exists";
+    String message() default "- ten adres email jest już zajęty";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default{};
 }
