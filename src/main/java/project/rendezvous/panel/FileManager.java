@@ -2,7 +2,7 @@ package project.rendezvous.panel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import other.ConsoleColors;
+import project.rendezvous.other.ConsoleColors;
 import project.rendezvous.registration.userDescription.UserDescription;
 import project.rendezvous.registration.userDescription.UserDescriptionRepository;
 

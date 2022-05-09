@@ -88,7 +88,7 @@ public class PanelService {
     }
 
 
-    // It allows you to create pairs by updating identifiers (email) for lists of people who like each other
+    // It allows you to create pairs by updating identifiers (email) for lists of people who like each project.rendezvous.other
     // Accepts UserFriends objects for the select and the select
     private boolean createPair(UserFriends userFriendsChooser, UserFriends userFriendsCandidate){
 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RendezVous-Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&family=Roboto:ital,wght@0,400;1,300;1,700&display=swap"
+            rel="stylesheet">
+    <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{css/home-style.css}" type="text/css">
+</head>
+
+<body>
+
+<video class="video-bg" autoplay muted loop id="myVideo">
+    <source th:src="@{video/video-bg.mp4}" type="video/mp4">
+    Your browser does not support HTML5 video.
+</video>
+
+<div class="wrapper">
+    <header class="header">
+        <button class="sign-in-btn"><i class="fas fa-user"></i>Zaloguj się</button>
+    </header>
+
+    <main class="main">
+        <section class="main-section">
+            <h1 class="main-logo">rendez<span class="span-vous"><span class="span-v">v</span>ous</span><i
+                    class="fas fa-heart"></i>
+            </h1>
+            <button class="register-btn">utwórz konto<i class="fas fa-user-plus"></i></button>
+            <p>Tysiące szans na poznanie nowych znajomych, nie czekaj, dołącz do społeczności !</p>
+
+
+        </section>
+    </main>
+
+    <footer class="footer">
+
+        <p class="logo">rendez<span class="vous-vous"><span class="vous-v">v</span>ous</span><i
+                class="fas fa-heart"></i>
+        </p>
+
+        <div class="button-box">
+            <button class="button-box-btn">dlaczego my</button>
+            <button class="button-box-btn">kontakt & pomoc</button>
+            <button class="button-box-btn">mobile</button>
+            <button class="button-box-btn">instagram</button>
+            <button class="button-box-btn">facebook</button>
+            <button class="button-box-btn">youtube</button>
+            <button class="button-box-btn button-box-btn-end">warunki poufności</button>
+        </div>
+        <p><button class="button-box-btn footer-copy-right">&copy; Copyright grupa P2 2022 </button>
+        </p>
+    </footer>
+</div>
+
+<script th:src="@{js/home-js.js}"></script>
+</body>
+
+</html>

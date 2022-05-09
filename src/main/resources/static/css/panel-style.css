@@ -20,6 +20,8 @@ body {
 	background-color: var(--glowny-kolor-tla);
 }
 
+/* ------------------------------ Panel wrapper ------------------------- */
+
 .panel-wrapper {
 	display: flex;
 	flex-direction: row;
@@ -35,37 +37,6 @@ body {
 	flex-direction: column;
 	height: 100%;
 }
-
-/*.menu {*/
-/*	flex-grow: 1;*/
-/*	display: flex;*/
-/*	flex-direction: column;*/
-/*	width: 100%;*/
-/*	margin-top: 10px;*/
-/*	border-top: 1px solid var(--kolor-ramek);*/
-/*}*/
-
-/*.menu-btn {*/
-/*	display: flex;*/
-/*	flex-direction: row;*/
-/*	margin: 5px 5px;*/
-/*	padding: 10px 5px;*/
-/*	border: none;*/
-/*	border-radius: 30px;*/
-/*	background: transparent;*/
-/*	color: rgb(31, 31, 31);*/
-/*	font-size: 15px;*/
-/*	cursor: pointer;*/
-/*	transition: color 0.3s;*/
-/*	background-color: rgb(255, 255, 255);*/
-/*}*/
-/*.menu-btn i {*/
-/*	margin-left: 20px;*/
-/*	margin-right: 10px;*/
-/*}*/
-/*.menu-btn:hover {*/
-/*	color: var(--glowny-kolor-animacji);*/
-/*}*/
 
 /* ------------------------------ Right wrapper ------------------------- */
 
@@ -98,7 +69,7 @@ body {
 	flex-direction: column;
 }
 
-/* *********** Offer box *********** */
+/* ------------------------------ Offer Box ------------------------- */
 
 .offer-box {
 	display: flex;
@@ -111,20 +82,23 @@ body {
 	background-color: white;
 }
 .offer-box {
-	-ms-overflow-style: none; /* Internet Explorer 10+ */
-	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
 }
 .offer-box::-webkit-scrollbar {
-	display: none; /* Safari and Chrome */
+	display: none;
 }
 
 .offer-pictures {
+	width: 100%;
 	height: 75%;
 }
 .offer-data {
 	display: flex;
 	flex-direction: column;
 	height: 25%;
+	width: 100%;
 }
 
 .offer-data-main {
@@ -157,6 +131,11 @@ body {
 	margin-right: 5px;
 }
 
+.viewed-value {
+	margin-left: 7px;
+	font-weight: 500;
+}
+
 .offer-data-description {
 	display: flex;
 	flex-direction: column;
@@ -186,18 +165,20 @@ body {
 	font-weight: 500;
 }
 
-/* Like, Reject, Star Buttons */
+/* ------------------------------ Like, Reject, Star Buttons ------------------------- */
 .like-btns-space {
 	min-height: 110px;
 }
 .like-btns-box {
 	position: fixed;
-	bottom: 0;
-	margin-left: 25%;
-	/* height: 100px; */
-	/* width: 100%; */
+	width: 390px;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content: center;
+	margin-top: 60px;
 	padding: 10px 0;
-	/* background-color: red; */
+	background: transparent;
 }
 
 .opinion-btn {
@@ -221,6 +202,8 @@ body {
 	color: #ff0803;
 	transition: font-size 0.5s, font-weight 0.1s;
 }
+
+
 .reject-btn:hover .fa-sad-tear {
 	font-size: 33px;
 	font-weight: 600;
@@ -244,7 +227,7 @@ body {
 	font-weight: 600;
 }
 
-/* *********** SWIPER *********** */
+/* ------------------------------ Swiper ------------------------- */
 .swiper {
 	width: 100%;
 	height: 100%;
@@ -277,9 +260,7 @@ body {
 	stroke: white !important;
 }
 
-/* ------------------------------------- Message box ------------------------------------- */
-
-/* -------------------------------------------------- */
+/* ------------------------------ Message Box ------------------------- */
 .message-box {
 	display: none;
 	flex-direction: row;
@@ -782,16 +763,18 @@ body {
 	.mobile-top {
 		display: flex;
 		width: 100%;
-		/* background-color: rebeccapurple; */
+	}
+
+/* additional */
+	.like-btns-box {
+		width: 100%;
+		margin-top: 115px;
 	}
 }
 
 @media (min-width: 800px) {
 	.left-message-box {
 		display: flex !important;
-	}
-	.right-message-box {
-		/* display: flex !important; */
 	}
 }
 
@@ -804,6 +787,5 @@ body {
 @media (min-width: 800px) {
 	.left-message-box {
 		max-width: 370px !important;
-		/* background-color: rgb(135, 20, 20); */
 	}
 }

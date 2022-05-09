@@ -57,4 +57,10 @@ public class ChatMessageController {
         simpMessagingTemplate.convertAndSendToUser(principal.getName(), "/queue/conversation", conversation);
     }
 
+    @MessageMapping("/videochat")
+    public void videochat(@Payload WebrtcConnectionNegotiateMessage webrtcConnectionNegotiateMessage, Principal principal) throws Exception {
+        System.out.println("I get message: " + webrtcConnectionNegotiateMessage.toString());
+        simpMessagingTemplate.convertAndSendToUser(webrtcConnectionNegotiateMessage.getTo(),"/queue/videochat",webrtcConnectionNegotiateMessage);
+    }
+
 }

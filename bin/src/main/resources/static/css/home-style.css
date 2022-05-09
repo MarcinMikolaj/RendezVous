@@ -1,0 +1,222 @@
+/* Plik przeznaczony dla strony startowej po stronie klienta dla aplikacji webowej home.html*/
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--header-bg-color: rgb(58, 58, 58, 0.55);
+	--main-color: rgb(58, 58, 58, 0.55);
+	--footer-bg-color: rgba(47, 47, 47, 0.75);
+}
+
+body {
+	height: 100vh;
+	font-family: 'Raleway', sans-serif;
+	font-family: 'Roboto', sans-serif;
+}
+
+/* Style dla video stanowiącego tło strony */
+.video-bg {
+	object-fit: cover;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+/* Pojemnik na sekcje: header, main, footer */
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+/* Sekcja header */
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	width: 100%;
+	height: 80px;
+	background-color: var(--header-bg-color);
+}
+
+.sign-in-btn {
+	padding: 10px 20px;
+	margin-right: 40px;
+	border: 1px solid rgb(255, 255, 255);
+	border-radius: 5px;
+	background: transparent;
+	letter-spacing: 1px;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+}
+.sign-in-btn:hover {
+	background: white;
+	color: black;
+}
+.fa-user {
+	margin-right: 5px;
+}
+
+/* Sekcja main */
+
+.main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+	background-color: var(--main-color);
+}
+
+.main-section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Logo w sekcji main */
+.main-logo {
+	margin-bottom: 5px;
+	color: white;
+	font-weight: 400;
+	font-size: 40px;
+	cursor: default;
+}
+
+.main-logo .fa-heart {
+	margin-left: 10px;
+}
+
+.span-vous {
+	font-size: 43px;
+	font-weight: 700;
+}
+
+.span-v {
+	text-transform: uppercase;
+}
+
+.main-section p {
+	margin-top: 15px;
+	text-align: center;
+	font-size: 16px;
+	width: 300px;
+	color: white;
+	cursor: default;
+}
+
+/* Przycisk rejestracji */
+.register-btn {
+	padding: 20px 60px;
+	border: none;
+	border-radius: 30px;
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	color: rgb(253, 253, 253);
+	background-color: #fce043;
+	background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+	opacity: 0.8;
+	cursor: pointer;
+}
+.register-btn:hover {
+	opacity: 1;
+	color: rgb(255, 255, 255);
+}
+.fa-user-plus {
+	font-size: 14px;
+	margin-left: 5px;
+}
+
+/* FOOTER SECTION */
+
+.footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 20px 0;
+	background-color: var(--footer-bg-color);
+}
+
+.button-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.button-box-btn {
+	padding: 2px 15px;
+	border: none;
+	border-right: 2px solid rgb(165, 165, 165);
+	font-size: 12px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	background: transparent;
+	color: rgb(192, 192, 192);
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.button-box-btn-end {
+	border: none;
+}
+.button-box-btn:hover {
+	color: white;
+}
+
+.logo {
+	font-size: 18px;
+	color: rgb(192, 192, 192);
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.logo .fa-heart {
+	margin-left: 5px;
+}
+.logo:hover {
+	color: white;
+}
+
+.vous-v {
+	text-transform: uppercase;
+}
+.vous-vous {
+	font-size: 21px;
+	font-weight: 700;
+}
+
+.footer-copy-right {
+	border: none;
+}
+
+@media (max-width: 960px) {
+	.logo {
+		margin-bottom: 15px;
+		color: rgb(209, 182, 31);
+	}
+}
+
+@media (max-width: 1150px) {
+	.footer-copy-right {
+		margin-top: 15px;
+		color: rgb(209, 182, 31);
+	}
+}

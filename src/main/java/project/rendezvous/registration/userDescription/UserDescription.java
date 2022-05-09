@@ -25,8 +25,7 @@ public class UserDescription {
     private String work;
     private String university;
     private String city;
-    // Set only when sending the object to the client
-    private int kilometersAway;
+    private int kilometersAway; // Set only when sending the object to the client
 
     private String haveChildren;
     private String amISmoking;

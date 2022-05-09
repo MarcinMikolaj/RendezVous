@@ -20,6 +20,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/recipients");
         registry.addEndpoint("/recipients").withSockJS();
 
+        registry.addEndpoint("/videochat");
+        registry.addEndpoint("/videochat").withSockJS();
+
         registry.addEndpoint("/conversation");
         registry.addEndpoint("/conversation").withSockJS();
     }

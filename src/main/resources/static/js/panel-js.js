@@ -26,6 +26,9 @@ let closeMobileMenuBtn;
 let mobileMenu; //mobile menu box
 let showRecipientsInMobileBtn;
 
+let startVideoTalker // start video conversation between users
+
+
 // box in right wrapper
 let browseCandidatesBox;
 let preferencesBox;
@@ -47,6 +50,16 @@ let viewedKilometersAway;
 let viewedUniversity;
 let viewedCity;
 let viewedWork;
+let viewedHaveChildren;
+let viewedAmISmoking;
+let viewedDoIDrinkAlcohol;
+let viewedHowTallAmI;
+let viewedHowMuchDoIWeight;
+let viewedDoIPlaySports;
+let viewedSexualOrientation;
+let viewedGender;
+let viewedInterested;
+
 
 // User Preferences inputs
 let selectGender;
@@ -64,6 +77,16 @@ let descriptionAge;
 let descriptionAboutMe;
 let descriptionSexualOrientation;
 let descriptionRelationshipStatus;
+let descriptionAmISmoking;
+let descriptionHaveChildren;
+let descriptionDoIDrinkAlcohol;
+let descriptionHowTallAmI;
+let descriptionHowMuchDoIWeight
+let descriptionDoIPlaySports;
+let descriptionInterested;
+let descriptionWork;
+let descriptionUniversity;
+let descriptionCity;
 let saveDescriptionBtn;
 let descriptionMobileTopImg;
 
@@ -89,13 +112,48 @@ let longitude; // długość geograficzna
 let swiperWrapper;
 
 let myCredentials; // My credentials, information about the currently logged in user
-let myUserDescription; // Object describing my profile, this profile is displayed to other users
+let myUserDescription; // Object describing my profile, this profile is displayed to project.rendezvous.other users
 let myUserPreferences; // My user search preferences
 
 let viewedUser = {
 	email: 'no email',
 	aboutMeDescription: 'no description',
 }; // Information about the currently viewed user
+
+
+// ------------ Video Talker -------------
+let webSocketClient;
+
+let videoChatWrapper;
+const localVideo = document.querySelector('.local-video');
+const remoteVideo = document.querySelector('.remote-video');
+
+// WebRTC
+let pc; // WebRTC peer connection
+let dataChannel; // WebRTC data channel
+let localStream;
+
+let sendMessageInputCHATROOM;
+let sendMessageButtonCHATROOM;
+let messageListCHATROOM;
+
+
+// menu buttons for video-chat
+let startVideoButton;
+let stopVideoButton;
+let mutedMicrophoneButton;
+let unmutedMicrophoneButton;
+let showChatButton;
+let closeChatButton;
+let changeVideoChatColorButton;
+let closeVideoChatButton;
+
+let incomingCallWrapper;
+let incomingCallOfferAccept;
+let incomingCallOfferReject;
+
+// set the time that must occur between sending the message for the time of sending the message to be shown
+let tostbstm = 10000; // milliseconds
 
 const prepareDOMElementns = () => {
 	panelWrapper = document.querySelector('.panel-wrapper');
@@ -121,9 +179,9 @@ const prepareDOMElementns = () => {
 	 mobileMenuBtnLogout= document.querySelector('.mobile-menu-btn-logout');
 
 	 openMobileMenuBtn = document.querySelector('.open-mobile-menu-btn');
-	closeMobileMenuBtn = document.querySelector('.close-mobile-menu-btn');
-	mobileMenu = document.querySelector('.mobile-menu');
-	showRecipientsInMobileBtn = document.querySelector('.show-recipient-btn');
+	 closeMobileMenuBtn = document.querySelector('.close-mobile-menu-btn');
+	 mobileMenu = document.querySelector('.mobile-menu');
+	 showRecipientsInMobileBtn = document.querySelector('.show-recipient-btn');
 
 	// box
 	browseCandidatesBox = document.querySelector('.browse-candidates-box');
@@ -158,6 +216,16 @@ const prepareDOMElementns = () => {
 	descriptionSexualOrientation = document.querySelector(
 		'.description-sexual-orientation'
 	);
+	descriptionAmISmoking = document.querySelector('.description-am-i-smoking');
+	descriptionHaveChildren = document.querySelector('.description-have-children');
+	descriptionDoIDrinkAlcohol = document.querySelector('.description-do-i-drink-alcohol');
+	descriptionHowTallAmI = document.querySelector('.description-how-tall-am-i');
+	descriptionHowMuchDoIWeight = document.querySelector('.description-how-much-do-i-weight');
+	descriptionDoIPlaySports = document.querySelector('.description-do-i-play-sports');
+	descriptionInterested = document.querySelector('.description-interested');
+	descriptionWork = document.querySelector('.description-work');
+	descriptionUniversity = document.querySelector('.description-university');
+	descriptionCity = document.querySelector('.description-city');
 	descriptionMobileTopImg = document.querySelector('.description-mobile-top-img');
 	descriptionRelationshipStatus = document.querySelector(
 		'.description-relationship-status'
@@ -191,6 +259,49 @@ const prepareDOMElementns = () => {
 	viewedUniversity = document.querySelector('.viewed-university');
 	viewedCity = document.querySelector('.viewed-city');
 	viewedWork = document.querySelector('.viewed-work');
+	viewedHaveChildren = document.querySelector('.viewed-have-children');
+	viewedAmISmoking = document.querySelector('.viewed-am-i-smoking');
+	viewedDoIDrinkAlcohol = document.querySelector('.viewed-do-i-drink-alcohol');
+	viewedHowTallAmI = document.querySelector('.viewed-how-tall-am-i');
+	viewedHowMuchDoIWeight = document.querySelector('.viewed-how-much-do-i-weight');
+	viewedDoIPlaySports = document.querySelector('.viewed-do-i-play-sports');
+	viewedSexualOrientation = document.querySelector('.viewed-sexual-orientation');
+	viewedGender = document.querySelector('.viewed-gender');
+	viewedInterested = document.querySelector('.viewed-interested');
+
+
+	startVideoTalker = document.querySelector('.start-video-talker');
+//	---------- Video Talker -----------
+
+	videoChatWrapper = document.querySelector('.video-chat-wrapper');
+
+	sendMessageButtonCHATROOM = document.querySelector(
+		'.sendMessageButtonCHATROOM'
+	);
+	sendMessageInputCHATROOM = document.querySelector(
+		'.sendMessageInputCHATROOM'
+	);
+	messageListCHATROOM = document.querySelector('.messageListCHATROOM');
+
+	// prepare menu buttons for video-chat
+	startVideoButton = document.querySelector('.start-video-button');
+	stopVideoButton = document.querySelector('.stop-video-button');
+	mutedMicrophoneButton = document.querySelector('.muted-microphone-button');
+	unmutedMicrophoneButton = document.querySelector(
+		'.unmuted-microphone-button'
+	);
+	showChatButton = document.querySelector('.show-chat-button');
+	closeChatButton = document.querySelector('.close-chat-button');
+	changeVideoChatColorButton = document.querySelector(
+		'.change-video-chat-color-button'
+	);
+	closeVideoChatButton = document.querySelector('.close-video-chat-button');
+
+	// incoming call wrapper
+	incomingCallWrapper = document.querySelector('.incoming-call-wrapper');
+	incomingCallOfferAccept = document.querySelector('.incoming-call-offer-accept');
+	incomingCallOfferReject = document.querySelector('.incoming-call-offer-reject');
+
 };
 
 const prepareDOMEvents = () => {
@@ -222,6 +333,33 @@ const prepareDOMEvents = () => {
 	openMobileMenuBtn.addEventListener('click', showMobileMenu);
 	closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
 	showRecipientsInMobileBtn.addEventListener('click', showRecipientsInMobile);
+
+	startVideoTalker.addEventListener('click', () => {
+		panelWrapper.style.display = 'none';
+		videoChatWrapper.style.display = 'flex';
+		startVideoTalkerApplication();
+	})
+
+//	---------- Video Talker ------------
+	// WebSocket
+	// connectWithWebSocketBtn.addEventListener('click', negotiateWebRTCConnectionByWebSocket);
+
+	sendMessageButtonCHATROOM.addEventListener('click', sendAndShowMyMessageToOtherUser);
+	sendMessageInputCHATROOM.addEventListener('keypress', (event) => {
+		if (event.key === 'Enter') {
+			sendAndShowMyMessageToOtherUser();
+		}
+	});
+	closeVideoChatButton.addEventListener('click', hangup);
+	closeChatButton.addEventListener('click', closeChat);
+	showChatButton.addEventListener('click', showChat);
+
+	incomingCallOfferAccept.addEventListener('click', acceptOrRejectIncomingCall);
+	incomingCallOfferReject.addEventListener('click', () => {
+		incomingCallWrapper.style.display = 'none';
+		videoChatWrapper.style.display = 'none';
+	})
+
 };
 
 const mainFunction = () => {
@@ -229,15 +367,22 @@ const mainFunction = () => {
 	prepareDOMEvents();
 	getMyCredentials();
 	getMyUserDescription();
+
+	setScrollToBottomForMessageChatRoom();
+	videoChatWrapper.style.display = 'none';
+	startVideoButton.style.display = 'none';
+	unmutedMicrophoneButton.style.display = 'none';
+	showChatButton.style.display = 'none';
 };
 
-// ********* Przeanczanie boxów ************
+// ********* Przełanczanie boxów ************
 const resetAllBox = () => {
 	browseCandidatesBox.style.display = 'none';
 	preferencesBox.style.display = 'none';
 	messageBox.style.display = 'none';
 	matchesBox.style.display = 'none';
 	profileSettingsBox.style.display = 'none';
+	videoChatWrapper.style.display = 'none';
 };
 
 const menuBtnBrowseCandidatesAction = () => {
@@ -283,7 +428,7 @@ const showRecipientsInMobile = () => {
 	leftMessageBox.style['max-width'] = '1000px';
 };
 
-// ********** Swipowanie uzytkowników **********
+// --------------------- Swipe.js ------------------------
 
 const swiper = new Swiper('.swiper', {
 	// Optional parameters
@@ -322,7 +467,7 @@ const swiper = new Swiper('.swiper', {
 	},
 });
 
-// ********************************************* Get my credentials and userDescription ***************************************
+// -------------------------------------------- Get my credentials and userDescription ------------------------------------
 
 // Enabling the authentication of the currently logged in user to be retrieved from the server
 const getMyCredentials = () => {
@@ -371,6 +516,16 @@ const setMyUserDescription = (myUserDescription) => {
 	descriptionAboutMe.value = myUserDescription.aboutMeDescription;
 	descriptionSexualOrientation.value = myUserDescription.sexualOrientation;
 	descriptionRelationshipStatus.value = myUserDescription.relationshipStatus;
+	descriptionAmISmoking.value = myUserDescription.amISmoking;
+	descriptionHaveChildren.value = myUserDescription.haveChildren;
+	descriptionDoIDrinkAlcohol.value = myUserDescription.doIDrinkAlcohol;
+	descriptionHowTallAmI.value = myUserDescription.howTallAmI;
+	descriptionHowMuchDoIWeight.value = myUserDescription.howMuchDoIWeight;
+	descriptionDoIPlaySports.value = myUserDescription.doIPlaySports;
+	descriptionInterested.value = myUserDescription.interested;
+	descriptionWork.value = myUserDescription.work;
+	descriptionUniversity.value = myUserDescription.university;
+	descriptionCity.value = myUserDescription.city;
 
 	if(myUserDescription.pictures[0].bytes){
 		descriptionMobileTopImg.src = myUserDescription.pictures[0].bytes;
@@ -381,7 +536,6 @@ const setMyUserDescription = (myUserDescription) => {
 	if(myUserDescription.pictures[0].bytes){
 		sidebarUserImg.src = myUserDescription.pictures[0].bytes;
 	}
-
 };
 
 // Send UserDescription object to server
@@ -402,6 +556,16 @@ const sendUserDescription = () => {
 				aboutMeDescription: descriptionAboutMe.value,
 				sexualOrientation: descriptionSexualOrientation.value,
 				relationshipStatus: descriptionRelationshipStatus.value,
+				haveChildren: descriptionHaveChildren.value,
+				amISmoking: descriptionAmISmoking.value,
+				doIDrinkAlcohol: descriptionDoIDrinkAlcohol.value,
+				howTallAmI: descriptionHowTallAmI.value,
+				howMuchDoIWeight: descriptionHowMuchDoIWeight.value,
+				doIPlaySports: descriptionDoIPlaySports.value,
+				interested: descriptionInterested.value,
+				work: descriptionWork.value,
+				university: descriptionUniversity.value,
+				city: descriptionCity.value,
 			}),
 		}
 	);
@@ -452,10 +616,7 @@ const getNextUserFromServer = () => {
 		},
 	})
 		.then((response) => response.json())
-		.then((response) => {
-			console.log(response);
-			viewedUser = response;
-		})
+		.then((response) => {viewedUser = response})
 		.then(() => setViewedUserInView(viewedUser))
 		.catch((error) => console.log('err: ', error));
 };
@@ -513,9 +674,19 @@ const setViewedUserInView = (viewedUser) => {
 	viewedCity.textContent = viewedUser.city;
 	viewedUniversity.textContent = viewedUser.university;
 	viewedWork.textContent = viewedUser.work;
+	viewedHaveChildren.textContent = viewedUser.haveChildren;
+	viewedAmISmoking.textContent = viewedUser.amISmoking;
+	viewedDoIDrinkAlcohol.textContent = viewedUser.doIDrinkAlcohol;
+	viewedHowTallAmI.textContent = viewedUser.howTallAmI + ' cm';
+	viewedHowMuchDoIWeight.textContent = viewedUser.howMuchDoIWeight + ' kg';
+	viewedDoIPlaySports.textContent = viewedUser.doIPlaySports;
+	viewedSexualOrientation.textContent = viewedUser.sexualOrientation;
+	viewedGender.textContent = viewedUser.relationshipStatus;
+	viewedInterested.textContent = viewedUser.interested;
+
 };
 
-// ******************** GetLocalisation **********************************
+// ******************** Get Localisation **********************************
 
 // Allows you to retrieve the user's location and send to server
 const getUserLocationAndSendToServer = () => {
@@ -681,6 +852,8 @@ const connectWebSocket = () => {
 		}
 	);
 
+	negotiateWebRTCConnectionByWebSocket();
+
 	conversationWebSocketClient = Stomp.client(
 		'ws://localhost:8080/conversation'
 	);
@@ -827,6 +1000,352 @@ inputMessageField.addEventListener('keyup', function (event) {
 });
 recipientListBox.addEventListener('click', setActualRecipientConversation);
 searchRecipientInput.addEventListener('keyup', searchRecipient);
+
+
+
+// ----------------------------------------------------- Video Talker Section -----------------------------------------------------
+
+
+const negotiateWebRTCConnectionByWebSocket = () => {
+
+	webSocketClient = Stomp.client('ws://localhost:8080/videochat')
+	webSocketClient.connect({username: myCredentials.email,}, function (frame){
+
+		webSocketClient.subscribe('/users/queue/videochat', function(message){
+
+			let rtc = JSON.parse(message.body).rtc;
+
+			switch (rtc.type) {
+				case 'offer':
+					if(localStream){
+						handleOffer(rtc);
+					}
+					break;
+				case 'answer':
+					if(localStream){
+						handleAnswer(rtc);
+					}
+					break;
+				case 'candidate':
+					if(localStream) {
+						handleCandidate(rtc);
+					}
+					break;
+				case 'ready':
+					// A second tab joined. This tab will initiate a call unless in a call already.
+					if (pc) {
+						console.log('already in call, ignoring');
+						return;
+					}
+					panelWrapper.style.display = 'none';
+					videoChatWrapper.style.display = 'none';
+					incomingCallWrapper.style.display = 'flex';
+					break;
+				case 'bye':
+					if (pc) {
+						hangup();
+					}
+					break;
+				default:
+					console.log('unhandled', rtc);
+					break;
+			}
+		})
+	})
+}
+
+
+
+// Default WebSocket send method
+const postMessage = (message) => {
+	console.log('GGGGGGGGGGGGGGGGGGGGGGG from:' + myCredentials.email + '. to: ' + actualRecipient.email);
+	let quote = {'from' : myCredentials.email, 'to' : actualRecipient.email, 'content': 'negotiate webRTC connect', 'rtc': message};
+	webSocketClient.send("/app/videochat", {}, JSON.stringify(quote));
+}
+
+async function acceptOrRejectIncomingCall() {
+	localStream = await navigator.mediaDevices.getUserMedia({
+		audio: true,
+		video: true,
+	});
+
+	if(localStream){
+		videoChatWrapper.style.display = 'flex';
+		localVideo.srcObject = localStream;
+		await makeCall();
+	}else {
+		// back to menu
+		console.log('you must share the video before you can start the conversation');
+	}
+}
+
+async function startVideoTalkerApplication()  {
+	localStream = await navigator.mediaDevices.getUserMedia({
+		audio: true,
+		video: true,
+	});
+	localVideo.srcObject = localStream;
+	startButton.disabled = true;
+	hangupButton.disabled = false;
+	postMessage({type: 'ready'});
+};
+
+// startButton.onclick = async () => {
+// 	localStream = await navigator.mediaDevices.getUserMedia({
+// 		audio: true,
+// 		video: true,
+// 	});
+// 	localVideo.srcObject = localStream;
+// 	startButton.disabled = true;
+// 	hangupButton.disabled = false;
+// 	postMessage({type: 'ready'});
+// };
+
+// hangupButton.onclick = async () => {
+// 	hangup();
+// 	postMessage({type: 'bye'});
+// };
+
+// Checking message is correct and calls the method responsible for send and display in chat panel this message.
+const sendAndShowMyMessageToOtherUser = () => {
+	const message = sendMessageInputCHATROOM.value;
+	if (isEmptyOrSpaces(message)) {
+		sendMessageInputCHATROOM.value = '';
+		return;
+	}
+	dataChannel.send(message); // send message via WebRTC data channel
+	addNewRightMessageInChatPanel(message);
+	sendMessageInputCHATROOM.value = ''; // clear message input
+}
+
+async function hangup() {
+	if (pc) {
+		pc.close();
+		pc = null;
+	}
+
+	if(localStream){
+		localStream.getTracks().forEach(track => track.stop());
+		localStream = null;
+	}
+
+	localVideo.pause();
+	localVideo.removeAttribute('src');
+	localVideo.load();
+
+	remoteVideo.pause();
+	remoteVideo.removeAttribute('src');
+	remoteVideo.load();
+
+	startButton.disabled = false;
+	hangupButton.disabled = true;
+
+	videoChatWrapper.style.display = 'none';
+	panelWrapper.style.display = 'flex';
+
+};
+
+function createPeerConnection() {
+	pc = new RTCPeerConnection();
+
+	dataChannel = pc.createDataChannel("chat"); // create WebRTC data channel
+
+	pc.ondatachannel = function (event) {
+		dataChannel = event.channel;
+	};
+
+	// listen message on data channel, (webRTC data channel)
+	dataChannel.onmessage = function(event) {
+		addNewLeftMessageInChatPanel(event.data);
+	};
+
+	pc.onicecandidate = e => {
+		const message = {
+			type: 'candidate',
+			candidate: null,
+		};
+		if (e.candidate) {
+			message.candidate = e.candidate.candidate;
+			message.sdpMid = e.candidate.sdpMid;
+			message.sdpMLineIndex = e.candidate.sdpMLineIndex;
+		}
+		postMessage(message);
+	};
+
+	pc.ontrack = e => remoteVideo.srcObject = e.streams[0];
+	localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+
+}
+
+async function makeCall() {
+	await createPeerConnection();
+
+	const offer = await pc.createOffer();
+	postMessage({type: 'offer', sdp: offer.sdp});
+	await pc.setLocalDescription(offer);
+
+	incomingCallWrapper.style.display = 'none';
+}
+
+async function handleOffer(offer) {
+	if (pc) {
+		console.error('existing peer connection');
+		return;
+	}
+	await createPeerConnection();
+	await pc.setRemoteDescription(offer);
+
+	const answer = await pc.createAnswer();
+	postMessage({type: 'answer', sdp: answer.sdp});
+	await pc.setLocalDescription(answer);
+}
+
+async function handleAnswer(answer) {
+	if (!pc) {
+		console.error('no peer connection');
+		return;
+	}
+	await pc.setRemoteDescription(answer);
+}
+
+async function handleCandidate(candidate) {
+	if (!pc) {
+		console.error('no peer connection');
+		return;
+	}
+	if (!candidate.candidate) {
+		await pc.addIceCandidate(null);
+	} else {
+		await pc.addIceCandidate(candidate);
+	}
+}
+
+async function sendFile() {
+
+}
+
+// ------ Show, close chat panel ------
+
+const closeChat = () => {
+	closeChatButton.style.display = 'none';
+	showChatButton.style.display = 'flex';
+	document.querySelector('.chat-room').style.display = 'none';
+}
+
+const showChat = () => {
+	showChatButton.style.display = 'none';
+	closeChatButton.style.display = 'flex';
+	document.querySelector('.chat-room').style.display = 'flex';
+}
+
+
+// ------ Add messages in chat panel ------
+
+// checks if the message is sent for the first time since session opening
+let leftTimeKey = true;
+let startTimeBetweenReceivedMessages;
+let stopTimeBetweenReceivedMessages;
+
+// This method allows you to display messages in the chat panel, it is intended for incoming messages
+const addNewLeftMessageInChatPanel = (message) => {
+	let time = 0; // time between received messages
+
+	if(leftTimeKey === true){
+		startTimeBetweenReceivedMessages = new Date().getTime();
+		leftTimeKey = false;
+	}else{
+		stopTimeBetweenReceivedMessages = new Date().getTime();
+		time = stopTimeBetweenReceivedMessages - startTimeBetweenReceivedMessages;
+	}
+
+	if(time <= tostbstm){
+		const li = document.createElement('li');
+		li.classList.add('leftMessagLiCHATROOM');
+		li.innerHTML = `<li class="leftMessagLiCHATROOM">
+                        <div class="leftMessagAdditionalBox">
+                            <img class="userImgMessageCHATROOM" src="" alt="">
+                            <p class="leftMessageContentCHATROOM">
+                                ${message}
+                            </p>
+                        </div>
+                    </li>`
+		messageListCHATROOM.appendChild(li);
+
+	}else {
+		const li = document.createElement('li');
+		li.classList.add('leftMessagLiCHATROOM');
+		li.innerHTML = `<li class="leftMessagLiCHATROOM">
+                        <p class="message-time">${getDateTime()}</p>
+                        <div class="leftMessagAdditionalBox margin15">
+                            <img class="userImgMessageCHATROOM" src="" alt="">
+                            <p class="leftMessageContentCHATROOM">
+                                ${message}
+                            </p>
+                        </div>
+                    </li>`
+		messageListCHATROOM.appendChild(li);
+		startTimeBetweenReceivedMessages = new Date().getTime();
+	}
+
+	setScrollToBottomForMessageChatRoom();
+}
+
+// checks if the message is sent for the first time since session opening
+let rightTimeKey = true;
+let startTimeBetweenSendMessages;
+let stopTimeBetweenSendMessages;
+
+// This method allows you to display messages in the chat panel, it is intended for sending messages
+const addNewRightMessageInChatPanel = (message) => {
+	let time = 0; // time between sent messages
+
+	if (rightTimeKey === true) {
+		startTimeBetweenSendMessages = new Date().getTime();
+		rightTimeKey = false;
+	} else {
+		stopTimeBetweenSendMessages = new Date().getTime();
+		time = stopTimeBetweenSendMessages - startTimeBetweenSendMessages;
+	}
+
+	if (time <= tostbstm) {
+		const li = document.createElement('li');
+		li.classList.add('rightMessagLiCHATROOM');
+		li.innerHTML = `<p class="rightMessageContentCHATROOM">${message}</p>`;
+		messageListCHATROOM.appendChild(li);
+	} else {
+		const li = document.createElement('li');
+		li.classList.add('rightMessagLiCHATROOM');
+		li.innerHTML = `<p class="message-time">${getDateTime()}</p>
+        <p class="rightMessageContentCHATROOM margin15">
+            ${message}
+        </p>`;
+
+		messageListCHATROOM.appendChild(li);
+		startTimeBetweenSendMessages = new Date().getTime();
+	}
+
+	setScrollToBottomForMessageChatRoom();
+};
+
+
+// *** auxiliary functions ***
+const isEmptyOrSpaces = (str) => {
+	return str === null || str.match(/^ *$/) !== null;
+};
+
+const setScrollToBottomForMessageChatRoom = () => {
+	document.querySelector('.chat-room-message-box').scrollTop =
+		document.querySelector('.chat-room-message-box').scrollHeight;
+};
+
+const getDateTime = () => {
+	let today = new Date();
+	let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	let dateTime = date+' '+time;
+	return dateTime;
+}
+
 
 // Start, DOMContentLoaded
 document.addEventListener('DOMContentLoaded', mainFunction);

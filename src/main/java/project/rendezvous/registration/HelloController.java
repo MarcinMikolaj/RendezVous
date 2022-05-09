@@ -173,9 +173,9 @@ public class HelloController {
         userFriends3.getLikeAndRejectUsers().add("marcin3246a51@o2.pl");
         userFriends3.getFormedPairsWithUsersList().add("marcin3246a51@o2.pl");
 
-        userFriends3.getLikeUsers().add("karolina455@gmail.com");
-        userFriends3.getLikeAndRejectUsers().add("karolina455@gmail.com");
-        userFriends3.getFormedPairsWithUsersList().add("karolina455@gmail.com");
+//        userFriends3.getLikeUsers().add("karolina455@gmail.com");
+//        userFriends3.getLikeAndRejectUsers().add("karolina455@gmail.com");
+//        userFriends3.getFormedPairsWithUsersList().add("karolina455@gmail.com");
 
         userFriends3.getLikeUsers().add("bakłażanek23@gmail.com");
         userFriends3.getLikeAndRejectUsers().add("bakłażanek23@gmail.com");
@@ -197,13 +197,13 @@ public class HelloController {
         conversation3a.setOwnerEmail("karolina455@gmail.com"); conversation3a.setRecipientEmail("bakłażanek23@gmail.com");
         userConversations3.getConversationList().add(conversation3a);
 
-        Conversation conversation3b = new Conversation();
-        conversation3b.getChatMessageList().add(new ChatMessage("hello 1"));
-        conversation3b.getChatMessageList().add(new ChatMessage("hello 2"));
-        conversation3b.getChatMessageList().add(new ChatMessage("hello 3"));
-        conversation3b.getChatMessageList().add(new ChatMessage("hello 4"));
-        conversation3b.setOwnerEmail("karolina455@gmail.com"); conversation3b.setRecipientEmail("karolina455@gmail.com");
-        userConversations3.getConversationList().add(conversation3b);
+//        Conversation conversation3b = new Conversation();
+//        conversation3b.getChatMessageList().add(new ChatMessage("hello 1"));
+//        conversation3b.getChatMessageList().add(new ChatMessage("hello 2"));
+//        conversation3b.getChatMessageList().add(new ChatMessage("hello 3"));
+//        conversation3b.getChatMessageList().add(new ChatMessage("hello 4"));
+//        conversation3b.setOwnerEmail("karolina455@gmail.com"); conversation3b.setRecipientEmail("karolina455@gmail.com");
+//        userConversations3.getConversationList().add(conversation3b);
 
         Conversation conversation3c = new Conversation();
         conversation3c.setOwnerEmail("karolina455@gmail.com"); conversation3c.setRecipientEmail("marcin3246a51@o2.pl");

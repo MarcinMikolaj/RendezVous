@@ -2,7 +2,6 @@ package project.rendezvous.communicator.recipient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import other.ConsoleColors;
 import project.rendezvous.communicator.ChatMessage;
 import project.rendezvous.communicator.messages.Conversation;
 import project.rendezvous.communicator.messages.UserConversationRepository;
@@ -17,7 +16,6 @@ import project.rendezvous.registration.userFriends.UserFriendsRepository;
 import project.rendezvous.registration.UserRepository;
 
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -105,6 +103,7 @@ public class RecipientService {
                 .findFirst().orElse(null);
 
         ChatMessage chatmessage = reverse(conversation.getChatMessageList().stream())
+                .filter(chatMessage -> chatMessage != null)
                 .filter(chatMessage -> chatMessage.getUsername().equals(recipientEmail))
                 .filter(chatMessage -> chatMessage.getText() != null && chatMessage.getText().length() > 0)
                 .findFirst().orElse(null);

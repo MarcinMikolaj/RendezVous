@@ -3,7 +3,7 @@ package project.rendezvous.panel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import other.ConsoleColors;
+import project.rendezvous.other.ConsoleColors;
 import project.rendezvous.panel.localization.GeoLocalization;
 import project.rendezvous.panel.localization.GeoLocalizationRepository;
 import project.rendezvous.panel.localization.GeoLocalizationService;
@@ -89,15 +89,18 @@ public class PanelRestController {
         return userDescription;
     }
 
+    // Allows you to get 'userDescription' to update form client
     @RequestMapping(path = "/panel/api/userDescription/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateUserDescription(@RequestBody UserDescription userDescription, Principal principal){
 
-        System.out.println(userDescription);
+        UserDescription actualUserDescription = userDescriptionRepository.findByEmail(principal.getName());
+        String actualId = actualUserDescription.getId();
 
-        String id = userDescriptionRepository.findByEmail(principal.getName()).getId();
         UserDescription toUpdate = userDescription;
-        toUpdate.setId(id);
+        toUpdate.setId(actualId);
         toUpdate.setEmail(principal.getName());
+        toUpdate.setPathToImgList(actualUserDescription.getPathToImgList());
+
         userDescriptionRepository.save(toUpdate);
 
     }

@@ -12,10 +12,9 @@
     <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
 
      <link rel="stylesheet" th:href="@{css/panel-style.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{css/sidebar-style.css}" type="text/css">
-     <!--    <link rel="stylesheet" href="./panel-style.css">-->
+     <link rel="stylesheet" th:href="@{css/sidebar-style.css}" type="text/css">
+     <link rel="stylesheet" th:href="@{css/video-talker-style1.css}" type="text/css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-
 
 </head>
 
@@ -132,18 +131,22 @@
                 </div>
                 <!-- Sidebar-->
             </div>
-            <!-- Left wrapper -->
+            <!-- End Left wrapper -->
         </div>
 
 
-
+        <!-- Right wrapper -->
         <div class="right-wrapper">
 
+            <!-- Browse Candidates Box -->
             <div class="browse-candidates-box">
+
                 <div class="offer-box">
                     <div class="offer-pictures">
                         <div class="swiper">
                             <div class="swiper-wrapper">
+
+<!--                test                    -->
 <!--                                <div class="swiper-slide">-->
 <!--                                    <img class="swiper-slide-img" src="./img/slide-1.jpg" alt="">-->
 <!--                                </div>-->
@@ -189,51 +192,59 @@
                         <!-- My description box -->
                         <div class="offer-data-description">
                             <p class="offer-data-description-title">Jak bym siebie opisał ?</p>
-                            <p class="viewed-aboutMe">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                                dignissimos sed ab commodi
-                                unde, obcaecati voluptatum recusandae sequi placeat amet quod blanditiis nam ratione
-                                nobis doloremque neque eaque illum libero. Saepe animi veniam tempore suscipit excepturi
-                                quaerat sit repudiandae eveniet?
-                            </p>
+                            <p class="viewed-aboutMe"></p>
                         </div>
 
-                        <!-- Body parameter and other -->
+                        <!-- Body parameter and project.rendezvous.other -->
                         <div class="offer-data-body-parameters offer-data-description">
                             <p class="offer-data-description-title">Trochę szczegółow o mnie</p>
-                            <div class="data-box"><i class="fas fa-baby-carriage"></i>
+                            <div class="data-box">
+                                <i class="fas fa-baby-carriage"></i>
                                 <p>Czy mam dzieci ?</p>
-                                <div></div>
+                                <p class="viewed-value viewed-have-children"></p>
                             </div>
-                            <div class="data-box"><i class="fas fa-smoking"></i>
+                            <div class="data-box">
+                                <i class="fas fa-smoking"></i>
                                 <p>Czy palę ?</p>
+                                <p class="viewed-value viewed-am-i-smoking"></p>
                             </div>
-                            <div class="data-box"><i class="fas fa-cocktail"></i>
+                            <div class="data-box">
+                                <i class="fas fa-cocktail"></i>
                                 <p>Czy piję alkochol ?</p>
+                                <p class="viewed-value viewed-do-i-drink-alcohol"></p>
                             </div>
-                            <div class="data-box"><i class="fas fa-arrows-alt-v"></i>
+                            <div class="data-box">
+                                <i class="fas fa-arrows-alt-v"></i>
                                 <p>Ile mam wzrostu ?</p>
+                                <p class="viewed-value viewed-how-tall-am-i"></p>
                             </div>
-                            <div class="data-box"><i class="fas fa-weight"></i>
+                            <div class="data-box">
+                                <i class="fas fa-weight"></i>
                                 <p>Ile ważę ?</p>
+                                <p class="viewed-value viewed-how-much-do-i-weight"></p>
                             </div>
-                            <div class="data-box"><i class="fas fa-swimmer"></i>
+                            <div class="data-box">
+                                <i class="fas fa-swimmer"></i>
                                 <p>Czy uprawiam sport ?</p>
+                                <p class="viewed-value viewed-do-i-play-sports"></p>
                             </div>
-                            <div class="data-box"><i class="fas fa-genderless"></i>
+                            <div class="data-box">
+                                <i class="fas fa-genderless"></i>
                                 <p>Moja orientacja sexualna ?</p>
+                                <p class="viewed-value viewed-sexual-orientation"></p>
                             </div>
-                            <div class="data-box"><i class="fas fa-grin-hearts"></i>
+                            <div class="data-box">
+                                <i class="fas fa-grin-hearts"></i>
                                 <p>Mój status związku ?</p>
+                                <p class="viewed-value viewed-gender"></p>
                             </div>
                         </div>
 
                         <!-- My passion box -->
                         <div class="offer-data-passion">
                             <p class="offer-data-passion-title">Moje Zainteresowania</p>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur labore voluptas qui
-                                vero eum veritatis tempore eos molestias quos pariatur?</p>
+                            <p class="viewed-interested"></p>
                         </div>
-
 
                         <div class="like-btns-space"></div>
                         <div class="like-btns-box">
@@ -248,9 +259,7 @@
 
 
 
-
-
-
+            <!-- Preference Box-->
             <div class="preferences-box">
                 <div>
                     <p>Szukam</p>
@@ -303,9 +312,7 @@
                         <option value="asexuality">Asexuality</option>
                     </select>
                 </div>
-
                 <button class="save-preferences-btn" type="default">Zapisz Filtry</button>
-
             </div>
 
 
@@ -371,6 +378,7 @@
                             </div>
 
                             <div class="conversation-top-icones-box">
+                                <i class="fa-solid fa-video start-video-talker"></i>
                                 <i class="fas fa-users show-recipient-btn conversation-top-icones-i"></i>
                             </div>
                         </div>
@@ -473,7 +481,7 @@
 
 
 
-            <!-- Matches Box -->
+            <!-- Description Box -->
             <div class="matches-box"></div>
 
             <div class="profile-settings-box">
@@ -481,6 +489,22 @@
                 <div>
                     <input class="description-name" type="text" placeholder="Twoje imie">
                 </div>
+
+
+                <div>
+                    <p>Gdzie pracujesz ?</p>
+                    <input class="description-work" type="text">
+                </div>
+
+                <div>
+                    <p>Jakie masz wykształcenie ?</p>
+                    <input class="description-university" type="text">
+                </div>
+                <div>
+                    <p>Gdzie mieszkasz ?</p>
+                    <input class="description-city" type="text">
+                </div>
+
 
                 <div>
                     <select class="description-gender">
@@ -497,12 +521,64 @@
                 </div>
 
                 <div>
+                    <p>Twój opis</p>
                     <textarea class="description-aboutMe" placeholder="o mnie"></textarea>
                 </div>
 
+                <div>
+                    <p>Jaki masz wzrost (cm) ?</p>
+                    <input class="description-how-tall-am-i" type="text">
+                </div>
 
                 <div>
-                    <p>Określ swoją orientacjie sexualną</p>
+                    <p>Jaką masz wagę (kg) ?</p>
+                    <input class="description-how-much-do-i-weight" type="text">
+                </div>
+
+                <div>
+                    <p>Czy uprawiasz Sport ?</p>
+                    <select class="description-do-i-play-sports">
+                        <option value="Kocham sport">Kocham sport</option>
+                        <option value="Raz na tydzien">Raz na tydzien</option>
+                        <option value="Dwa razy w tygodniu">Dwa razy w tygodniu</option>
+                        <option value="Nie lubie sportu">Nie lubie sportu</option>
+                        <option value="Nigdy">Nigdy</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p>Pijesz Alkochol ?</p>
+                    <select class="description-do-i-drink-alcohol">
+                        <option value="Tak">Tak</option>
+                        <option value="Dla towarzystwa">Dla towarzystwa</option>
+                        <option value="Sporadycznie">Sporadycznie</option>
+                        <option value="Nie pije">Nie pije</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p>Palisz ?</p>
+                    <select class="description-am-i-smoking">
+                        <option value="Dla towarzystwa">Dla towarzystwa</option>
+                        <option value="Palę do alkoholu">Palę do alkoholu</option>
+                        <option value="Nie palę">Nie palę</option>
+                        <option value="Palę">Palę</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p>Czy masz dzieci ?</p>
+                    <select class="description-have-children">
+                        <option value="Nie mam">Nie mam</option>
+                        <option value="Tylko jedno">Tylko jedno</option>
+                        <option value="Dwójkę">Dwójkę</option>
+                        <option value="Trójkę">Trójkę</option>
+                        <option value="Więcej niż 3">Więcej niż 3</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p>Określ swoją orientacje sexualną</p>
                     <select class="description-sexual-orientation">
                         <option value="hetero">Hetero</option>
                         <option value="homo">Homo</option>
@@ -512,7 +588,6 @@
                 </div>
 
                 <div>
-
                     <p>Określ swój status związku</p>
                     <select class="description-relationship-status">
                         <option value="single">Jestem singlem</option>
@@ -524,6 +599,11 @@
                     </select>
                 </div>
 
+                <div>
+                    <p>Twoje zainteresowania</p>
+                    <textarea class="description-interested" placeholder="moje zainteresowania"></textarea>
+                </div>
+
                 <button class="save-description-btn" type="default">Zapisz UserDescription</button>
 
                 <div>
@@ -532,19 +612,111 @@
                 </div>
 
                 <button class="save-description-image-btn">Ustaw zdjęcie</button>
+            </div>
 
 
+
+        </div>
+    </div>
+
+
+
+
+
+
+<!--  Video Talker Section  -->
+
+    <div class="incoming-call-wrapper">
+        <p>Randkowicz zaprasza cię do rozmowy</p>
+        <div class="incoming-call-offer-box">
+            <div class="incoming-call-offer incoming-call-offer-accept">
+                <i class="fa-solid fa-phone"></i>
+                <p>Odbierz</p>
+            </div>
+            <div class="incoming-call-offer incoming-call-offer-reject">
+                <i class="fa-solid fa-phone-slash"></i>
+                <p>Odrzuć</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="video-chat-wrapper">
+        <!-- Video chat top section -->
+        <div class="video-chat-top">
+            <div class="video-chat-top-logo">
+                <p>rendez<span style="font-weight: 600;">Vous</span></p>
+                <i class="fa-solid fa-heart"></i>
+            </div>
+        </div>
+        <div class="video-chat-main">
+            <div class="video-room">
+                <video class="local-video" playsinline autoplay muted></video>
+                <video class="remote-video" playsinline autoplay></video>
+            </div>
+            <div class="chat-room">
+                <div class="chat-room-user-box">a</div>
+                <div class="chat-room-message-box">
+                    <ul class="messageListCHATROOM"></ul>
+                </div>
+                <div class="chat-room-send-box">
+                    <div class="chat-room-box-b1">
+                        <input class="sendMessageInputCHATROOM" type="text" placeholder="zadaj mi pytanie...">
+                        <i class="fa-solid fa-paper-plane sendMessageButtonCHATROOM"></i>
+                    </div>
+                </div>
             </div>
 
         </div>
+        <div class="video-chat-bottom">
 
+            <div class="menu-btn-box-chatroom stop-video-button">
+                <i class="fa-solid fa-video"></i></button>
+                <p>Stop video</p>
+            </div>
+            <div class="menu-btn-box-chatroom start-video-button">
+                <i class="fa-solid fa-video-slash"></i></button>
+                <p>Start video</p>
+            </div>
 
+            <div class="menu-btn-box-chatroom muted-microphone-button">
+                <i class="fa-solid fa-microphone"></i></button>
+                <p>Wycisz</p>
+            </div>
+
+            <div class="menu-btn-box-chatroom unmuted-microphone-button">
+                <i class="fa-solid fa-microphone-slash "></i>
+                <p>Wyłącz wyciszenie</p>
+            </div>
+
+            <div class="menu-btn-box-chatroom show-chat-button">
+                <i class="fa-solid fa-comment"></i></i>
+                <p>Pokaż chat</p>
+            </div>
+
+            <div class="menu-btn-box-chatroom close-chat-button">
+                <i class="fa-solid fa-comment-slash"></i>
+                <p>Ukryj chat</p>
+            </div>
+
+            <div class="menu-btn-box-chatroom">
+                <i class="fa-solid fa-palette change-video-chat-color-button"></i>
+                <p>Zmienń kolor</p>
+            </div>
+
+            <div class="menu-btn-box-chatroom close-video-chat-button">
+                <i class="fa-solid fa-rectangle-xmark"></i>
+                <p>Zakończ rozmowę</p>
+            </div>
+
+        </div>
     </div>
 
      <script th:src="@{js/stomp-lib.js}"></script>
      <script type="module" th:src="@{js/panel-js.js}"></script>
      <script th:src="@{js/sidebar-js.js}"></script>
-<!--    <script type="module" src="./panel-js.js"></script>-->
+
 </body>
 
 </html>

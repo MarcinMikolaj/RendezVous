@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>RendezVous-Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&family=Roboto:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
+
+     <link rel="stylesheet" th:href="@{css/panel-style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/sidebar-style.css}" type="text/css">
+     <!--    <link rel="stylesheet" href="./panel-style.css">-->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+
+</head>
+
+<body>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-btns-box">
+            <button class="mobile-menu-btn mobile-menu-btn-browse-candidates" value="0">
+                <i class="fas fa-user-friends"></i>
+                <p>Przeglądaj</p>
+            </button>
+            <button class="mobile-menu-btn mobile-menu-btn-preferences" value="0">
+                <i class="fas fa-sliders-h"></i>
+                <p>Preferencjie</p>
+            </button>
+            <button class="mobile-menu-btn mobile-menu-btn-message" value="0">
+                <i class="fas fa-comment"></i>
+                <p>Wiadomości</p>
+            </button>
+            <button class="mobile-menu-btn mobile-menu-btn-matches" value="">
+                <i class="fas fa-heart"></i>
+                <p>Dopasowania</p>
+            </button>
+            <button class="mobile-menu-btn mobile-menu-btn-settings" value="0">
+                <i class="fas fa-cog"></i>
+                <p>Ustawienia</p>
+            </button>
+            <button class="mobile-menu-btn mobile-menu-btn-logout">
+                <i class="fas fa-arrow-left"></i>
+                <p>Wyloguj</p>
+            </button>
+        </div>
+        <i class="fas fa-arrow-circle-left close-mobile-menu-btn"></i>
+    </div>
+
+
+    <!-- User Panel -->
+    <div class="panel-wrapper">
+
+        <div class="mobile-top">
+            <img class="description-mobile-top-img" src="" alt="">
+            <p class="logo">rendez<span class="vous-vous"><span class="vous-v">v</span>ous</span><i
+                    class="fas fa-heart"></i>
+            </p>
+            <i class="fas fa-bars open-mobile-menu-btn"></i>
+        </div>
+
+        <!-- Left wrapper -->
+        <div class="left-wrapper">
+            <!-- Sidebar-->
+            <div class="sidebar">
+                <!-- Top Section -->
+                <div class="sidebar-top-section">
+                    <div class="sidebar-logo">
+                        <span>rendezVous</span>
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <i class="fa-solid fa-arrow-left minimize-sidebar-button minimalize-maxymalize-sidebar-button"></i>
+                    <i class="fa-solid fa-arrow-right maximize-sidebar-button minimalize-maxymalize-sidebar-button"></i>
+                </div>
+                <!-- User Section -->
+                <div class="sidebar-user-section sidebar-box">
+                    <img class="sidebar-user-img" src="" alt="user picture">
+                    <span class="sidebar-user-name"></span>
+                    <span class="sidebar-user-active-bullet"></span>
+                </div>
+                <!-- Search Section -->
+                <div class="sidebar-box sidebar-search-section">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input class="sidebar-search-input" type="text" placeholder="Search..">
+                </div>
+                <!-- Buttons Section -->
+                <ul class="sidebar-buttons-section sidebar-buttons-list">
+                    <li class="sidebar-box sidebar-button menu-btn-browse-candidates">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>Chybił trafił</span>
+                    </li>
+                    <li class="sidebar-box sidebar-button menu-btn-message">
+                        <i class="fa-solid fa-comment"></i>
+                        <span>Chat</span>
+                    </li>
+                    <li class="sidebar-box sidebar-button menu-btn-preferences">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>Preferencje</span>
+                    </li>
+                    <li class="sidebar-box sidebar-button menu-btn-settings">
+                        <i class="fa-solid fa-address-card"></i>
+                        <span>Profil</span>
+                    </li>
+                    <li class="sidebar-box sidebar-button menu-btn-matches">
+                        <i class="fa-solid fa-people-carry-box"></i>
+                        <span>Pary</span>
+                    </li>
+                </ul>
+                <!-- Logout Section -->
+                <div class="sidebar-menu-logout-section">
+                    <div class="sidebar-box sidebar-button menu-btn-logout">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+                <!-- Change color section -->
+                <div class="sidebar-change-color-section">
+                    <div class="sidebar-box sidebar-change-color-box">
+                        <i class="fa-solid fa-moon change-color-moon-icone"></i>
+                        <i class="fa-solid fa-sun change-color-sun-icone"></i>
+                        <span class="light-dark-mode-text">Dark mode</span>
+                        <label class="switch ">
+                            <input class="" type="checkbox">
+                            <div class="slider round sidebar-change-color-input"></div>
+                        </label>
+                    </div>
+                </div>
+                <!-- Sidebar-->
+            </div>
+            <!-- Left wrapper -->
+        </div>
+
+
+
+        <div class="right-wrapper">
+
+            <div class="browse-candidates-box">
+                <div class="offer-box">
+                    <div class="offer-pictures">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+<!--                                <div class="swiper-slide">-->
+<!--                                    <img class="swiper-slide-img" src="./img/slide-1.jpg" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="swiper-slide">-->
+<!--                                    <img class="swiper-slide-img" src="./img/slide-2.jpg" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="swiper-slide">-->
+<!--                                    <img class="swiper-slide-img" src="./img/slide-3.jpg" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="swiper-slide">-->
+<!--                                    <img class="swiper-slide-img" src="./img/slide-4.jpg" alt="">-->
+<!--                                </div>-->
+                            </div>
+
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-scrollbar"></div>
+                        </div>
+                    </div>
+                    <div class="offer-data">
+
+                        <!-- Main information about recipient, box -->
+                        <div class="offer-data-main">
+                            <div class="name-age-box">
+                                <p class="viewed-name">-</p>
+                                <p class="viewed-age">-</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-briefcase"></i>
+                                <p class="viewed-work">-</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-home"></i>
+                                <p class="viewed-university">-</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-graduation-cap"></i>
+                                <p class="viewed-city">-</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-map-marker-alt"></i>
+                                <p class="viewedKilometersAway">-</p>
+                            </div>
+
+                        </div>
+
+                        <!-- My description box -->
+                        <div class="offer-data-description">
+                            <p class="offer-data-description-title">Jak bym siebie opisał ?</p>
+                            <p class="viewed-aboutMe">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
+                                dignissimos sed ab commodi
+                                unde, obcaecati voluptatum recusandae sequi placeat amet quod blanditiis nam ratione
+                                nobis doloremque neque eaque illum libero. Saepe animi veniam tempore suscipit excepturi
+                                quaerat sit repudiandae eveniet?
+                            </p>
+                        </div>
+
+                        <!-- Body parameter and project.rendezvous.other -->
+                        <div class="offer-data-body-parameters offer-data-description">
+                            <p class="offer-data-description-title">Trochę szczegółow o mnie</p>
+                            <div class="data-box"><i class="fas fa-baby-carriage"></i>
+                                <p>Czy mam dzieci ?</p>
+                                <div></div>
+                            </div>
+                            <div class="data-box"><i class="fas fa-smoking"></i>
+                                <p>Czy palę ?</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-cocktail"></i>
+                                <p>Czy piję alkochol ?</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-arrows-alt-v"></i>
+                                <p>Ile mam wzrostu ?</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-weight"></i>
+                                <p>Ile ważę ?</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-swimmer"></i>
+                                <p>Czy uprawiam sport ?</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-genderless"></i>
+                                <p>Moja orientacja sexualna ?</p>
+                            </div>
+                            <div class="data-box"><i class="fas fa-grin-hearts"></i>
+                                <p>Mój status związku ?</p>
+                            </div>
+                        </div>
+
+                        <!-- My passion box -->
+                        <div class="offer-data-passion">
+                            <p class="offer-data-passion-title">Moje Zainteresowania</p>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur labore voluptas qui
+                                vero eum veritatis tempore eos molestias quos pariatur?</p>
+                        </div>
+
+
+                        <div class="like-btns-space"></div>
+                        <div class="like-btns-box">
+                            <button class="reject-btn opinion-btn"><i class="fas fa-sad-tear"></i></button>
+                            <button class="super-btn opinion-btn"><i class="fas fa-star"></i></button>
+                            <button class="like-btn opinion-btn"><i class="fas fa-heart"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="preferences-box">
+                <div>
+                    <p>Szukam</p>
+                    <select class="select-gender">
+                        <option value="all">Wszystkich</option>
+                        <option value="man">Meżczyzn</option>
+                        <option value="woman">Kobiet</option>
+                    </select>
+                </div>
+
+
+                <div>
+                    <input class="slider-min-age-input" type="range" min="18" max="80" value="40"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <input class="slider-max-age-input" type="range" min="18" max="80" value="40"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <input class="slider-distance-input" type="range" min="0" max="160" value="80"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <p>Jakich osób szukasz</p>
+                    <select class="select-relationship-status">
+                        <option value="all">Wszystkich</option>
+                        <option value="single">Tylko Singli</option>
+                        <option value="relation">Osób w związku</option>
+                        <option value="wedding">Tylko po ślubiee</option>
+                        <option value="divorce">Tylko po rozwodzie</option>
+                        <option value="complicated">osób z To skomplikowane</option>
+                        <option value="beer">W związku z piwem</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p>Pokaż mi użytkowników ze względu na orientacjie</p>
+                    <select class="select-sexual-orientation">
+                        <option value="all">Wszystkich</option>
+                        <option value="hetero">Hetero</option>
+                        <option value="homo">Homo</option>
+                        <option value="bisexual">Bisexual</option>
+                        <option value="asexuality">Asexuality</option>
+                    </select>
+                </div>
+
+                <button class="save-preferences-btn" type="default">Zapisz Filtry</button>
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <!-- Message Box -->
+            <div class="message-box">
+
+                <div class="left-message-box">
+
+                    <!-- Search recipient box -->
+                    <div class="search-recipient-box">
+                        <div class="search-recipient">
+                            <i class="fas fa-search"></i>
+                            <input class="search-recipient-input" type="text" placeholder="Szukaj użytkowników">
+                        </div>
+                    </div>
+
+
+                    <div class="sort-recipient-box">
+                        <select class="sort-recipient-select" name="" id="">
+                            <option value="">Wszyscy</option>
+                            <option value="">Aktywni</option>
+                            <option value="">Nieaktywni</option>
+                        </select>
+
+                    </div>
+
+                    <!-- Recipient list -->
+                    <ul class="recipient-list-box">
+
+                        <!-- Default recipient box -->
+                        <li style="display: none" class="recipient-box"></li>
+
+<!--                        <li id="111" class="recipient-box">-->
+<!--                            <div class="recipient-status"></div>-->
+<!--                            <img class="recipient-img" src="./img/slide-1.jpg" alt="">-->
+<!--                            <div class="recipient-box-center">-->
+<!--                                <p class="recipient-nick">nick</p>-->
+<!--                                <p class="recipient-last-message">Hej co u cb słychać ?</p>-->
+<!--                            </div>-->
+<!--                            <p class="recipient-last-message-time">5 godz</p>-->
+<!--                        </li>-->
+
+                    </ul>
+
+                    <button class="create-pair-link">Znajdź nową parę !</button>
+
+                </div>
+
+                <div class="right-message-box">
+
+                    <div class="message-box-conversation">
+                        <div class="conversation-top">
+                            <div class="conversation-top-name">
+                                <p class="conversation-top-name-p"></p>
+                                <div class="conversation-top-nam-active"></div>
+                            </div>
+
+                            <div class="conversation-top-icones-box">
+                                <i class="fas fa-users show-recipient-btn conversation-top-icones-i"></i>
+                            </div>
+                        </div>
+
+                        <ul class="conversation-list">
+
+                            <li class="conversation-li-right">
+                                <p>Wybierz znajomego i czatuj razem z nim !</p>
+                            </li>
+
+                            <!--                                TEST-->
+<!--                            <li class="conversation-li-right">-->
+<!--                                <div>-->
+<!--                                    <p class="g">ok</p>-->
+<!--                                </div>-->
+<!--                                <p class="l">20.12.2021 14:32</p>-->
+<!--                            </li>-->
+<!--                            <li class="conversation-li-left">-->
+<!--                                <img class="conversation-message-img" src="./img/slide-1.jpg" alt="">-->
+<!--                                <div>-->
+<!--                                    <p class="d">Hejka co tam u cb słychać ?</p>-->
+<!--                                    <p class="c">20.12.2021 14:32</p>-->
+<!--                                </div>-->
+<!--                            </li>-->
+
+                        </ul>
+                        <div class="send-message-wrapper">
+                            <div class="message-sending-panel">
+                                <input class="input-message-field" type="text" placeholder="podaj wiadomość" />
+                                <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message-box-preview">
+                        <div class="preview">
+                            <img class="preview-img" src="" alt="">
+
+                            <div class="preview-data">
+                                <!-- prewiev main data -->
+                                <div class="offer-data-main">
+                                    <div class="name-age-box">
+                                        <p class="preview-name">-</p>
+                                        <p class="preview-age">-</p>
+                                    </div>
+                                    <div class="data-box"><i class="fas fa-briefcase"></i>
+                                        <p class="preview-work">-</p>
+                                    </div>
+                                    <div class="data-box"><i class="fas fa-home"></i>
+                                        <p class="preview-university">-</p>
+                                    </div>
+                                    <div class="data-box"><i class="fas fa-graduation-cap"></i>
+                                        <p class="preview-city">-</p>
+                                    </div>
+                                    <div class="data-box"><i class="fas fa-map-marker-alt"></i>
+                                        <p class="preview-KilometersAway">-</p>
+                                    </div>
+
+                                </div>
+
+                                <!-- prewiev description box -->
+                                <div class="offer-data-description">
+                                    <p class="offer-data-description-title">Jak bym siebie opisał ?</p>
+                                    <p class="viewed-aboutMe">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        Id
+                                        dignissimos sed ab commodi
+                                        unde, obcaecati voluptatum recusandae sequi placeat amet quod blanditiis nam
+                                        ratione
+
+                                    </p>
+                                </div>
+
+                                <!-- prewiev passion box -->
+                                <div class="offer-data-passion">
+                                    <p class="offer-data-passion-title">Moje Zainteresowania</p>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur labore
+                                        voluptas
+                                        qui
+                                    </p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="remove-report-btn-box">
+                            <button class="report-remove-pair-btn">usuń parę</button>
+                            <button class="report-remove-pair-btn">zgłoś</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- end Message box -->
+            </div>
+
+
+
+
+
+
+
+
+            <!-- Description Box -->
+            <div class="matches-box"></div>
+
+            <div class="profile-settings-box">
+
+                <div>
+                    <input class="description-name" type="text" placeholder="Twoje imie">
+                </div>
+
+                <div>
+                    <select class="description-gender">
+                        <option value="man">Meżczyzną</option>
+                        <option value="woman">Kobietą</option>
+                    </select>
+                </div>
+
+
+                <div>
+                    <input class="description-age" type="range" min="0" max="80" value="40"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>-</output>
+                </div>
+
+                <div>
+                    <textarea class="description-aboutMe" placeholder="o mnie"></textarea>
+                </div>
+
+                private String haveChildren;
+                private String amISmoking;
+                private String doIDrinkAlcohol;
+                private String howTallAmI;
+                private String howMuchDoIWeight;
+                private String doIPlaySports;
+
+<!--                new-->
+
+                <div>
+                    <p>Palisz ?</p>
+                    <select class="">
+                        <option value="">Palę tylko dla towarzystwa</option>
+                        <option value="">Palę do alkoholu</option>
+                        <option value="">Nie palę</option>
+                        <option value="">Palę</option>
+                    </select>
+                </div>
+
+                <p>Palisz ?</p>
+                <select class="">
+                    <option value="">Palę tylko dla towarzystwa</option>
+                    <option value="">Palę do alkoholu</option>
+                    <option value="">Nie palę</option>
+                    <option value="">Palę</option>
+                </select>
+            </div>
+
+
+
+
+<!--                old-->
+
+                <div>
+                    <p>Określ swoją orientacje sexualną</p>
+                    <select class="description-sexual-orientation">
+                        <option value="hetero">Hetero</option>
+                        <option value="homo">Homo</option>
+                        <option value="bisexual">Bisexual</option>
+                        <option value="asexuality">Asexuality</option>
+                    </select>
+                </div>
+
+                <div>
+
+                    <p>Określ swój status związku</p>
+                    <select class="description-relationship-status">
+                        <option value="single">Jestem singlem</option>
+                        <option value="relation">Jestem w związku</option>
+                        <option value="wedding">Po ślubie</option>
+                        <option value="divorce">Po rozwodzie</option>
+                        <option value="complicated">To skomplikowane</option>
+                        <option value="beer">W związku z piwem</option>
+                    </select>
+                </div>
+
+                <button class="save-description-btn" type="default">Zapisz UserDescription</button>
+
+                <div>
+                    <label>Wyślij zdjęcie</label>
+                    <input class="description-image-input" type="file" placeholder="zdjęcie">
+                </div>
+
+                <button class="save-description-image-btn">Ustaw zdjęcie</button>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+     <script th:src="@{js/stomp-lib.js}"></script>
+     <script type="module" th:src="@{js/panel-js.js}"></script>
+     <script th:src="@{js/sidebar-js.js}"></script>
+<!--    <script type="module" src="./panel-js.js"></script>-->
+</body>
+
+</html>

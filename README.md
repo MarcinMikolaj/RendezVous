@@ -12,7 +12,7 @@ Tables of content
 
 This project is a dating app. Each visitor to the application can create an account and then log in to the user panel.
 
-The application will show us other users and information about them with whom we can pair. Whether we reject a given user or accept it depends on us.
+The application will show us project.rendezvous.other users and information about them with whom we can pair. Whether we reject a given user or accept it depends on us.
 
 The application allows you to display the candidates offered to us depending on our preferences regarding e.g. distance, age range, gender, etc.
 

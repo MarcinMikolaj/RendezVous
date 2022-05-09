@@ -10,7 +10,7 @@ let sidebarChangeColorInput; // Change Color button
 let minimizeSidebarButton;
 let maximizeSidebarButton;
 
-// other elements
+// project.rendezvous.other elements
 let sidebarLogo;
 
 // Change color
@@ -76,7 +76,7 @@ const prepareDOMElements = () => {
     changeColorMoonIcone = document.querySelector('.change-color-moon-icone');
     lightDarkModeText = document.querySelector('.light-dark-mode-text');
 
-    // other elements
+    // project.rendezvous.other elements
     sidebarLogo = document.querySelector('.sidebar-logo');
 };
 

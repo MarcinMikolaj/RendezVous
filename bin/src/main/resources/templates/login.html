@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn</title>
+    <script src="https://kit.fontawesome.com/91d2f81fc7.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&family=Raleway:wght@300;600&display=swap"
+        rel="stylesheet">
+     <link rel="stylesheet" th:href="@{css/login-style.css}" type="text/css">
+</head>
+
+<body>
+
+    <!-- <button type="default" class="home-link">HOME</button> -->
+
+    <div class="wrapper">
+
+        <div class="wrapper-left">
+
+            <form class="login-page-form" th:method="post" th:action="@{/login}" action="login">
+
+                <h1>Witaj ponownie</h1>
+                <p class="describe-text">Miło znów cie widzieć ! Podaj swoje dane i zaczynaj randkować.</p>
+
+                <p style="margin-bottom: 10px; color: rgb(232, 49, 49); font-weight: bold;" class="error-message"
+                    th:if="${loginError}">Podałeś niepoprawny email lub hasło</p>
+
+                <label class="label" for="email-id">Email</label>
+                <div class="input-email-box input-box">
+                    <i class="fas fa-user"></i>
+                    <input id="email-id" class="authentication-input" name="username" type="text"
+                        placeholder="Wprowadź swój email">
+                </div>
+
+                <label class="label" for="password-id">Password</label>
+                <div class="input-password-box input-box">
+                    <i class="fas fa-unlock"></i>
+                    <input id="password-id" class="authentication-input" name="password" type="password"
+                        placeholder="Wprowadź swoje hasło">
+                </div>
+
+                <p class="forgot-password-link">Zapomniałeś hasła ?</p>
+
+                <div class="buttons-box">
+                    <button type="default" class="signIn-btn btn">Zaloguj</button>
+                    <button type="default" class="google-btn btn">
+                        <i class="fab fa-google"></i>
+                        <p>Zaloguj się przez Google</p>
+                    </button>
+                </div>
+
+                <div class="create-account-box">
+                    <p class="create-account-question">Nie masz jeszcze konta ?
+                    <p class="create-account-link">Zarejestruj się już teraz.</p>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="wrapper-right">
+            <div class="wrapper-right-background-filtr"></div>
+            <p class="logo">rendez<span class="vous-vous">Vous</span><i class="fas fa-heart"></i></p>
+            <img class="img-background"  th:src="@{imges/login-background.jpg}"
+                alt="Obrazek przectawiający mężczyzne i kobiete.">
+        </div>
+
+    </div>
+    </div>
+
+     <script type="module" th:src="@{js/login-js.js}"></script>
+</body>
+
+</html>

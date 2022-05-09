@@ -1,0 +1,451 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--form-main-color: rgb(245, 212, 23);
+	--form-border-focus-color: rgb(143, 124, 12);
+	--section-title-line-color: rgb(199, 199, 199);
+}
+
+body {
+	font-family: 'Raleway', sans-serif;
+	font-family: 'Roboto', sans-serif;
+}
+
+/* Główny kontener na zawartość strony */
+.contener {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	min-height: 100vh;
+}
+
+/* Nawigacja */
+.navigation {
+	position: sticky;
+	top: 0%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 80px;
+	background-color: white;
+}
+
+.navigation-logo {
+	margin-left: 20px;
+	padding: 5px 5px;
+	font-size: 23px;
+	cursor: pointer;
+}
+.navigation-logo p span {
+	font-size: 25px;
+	font-weight: 700;
+	color: gold;
+}
+.fa-heart {
+	margin-left: 5px;
+	color: gold;
+}
+
+.navigation-buttons {
+	margin-right: 20px;
+}
+
+.button {
+	margin: 0 10px;
+	padding: 10px 20px;
+	border: 1px solid rgb(181, 181, 181);
+	border-radius: 4px;
+	font-size: 15px;
+	background: transparent;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.button:hover {
+	background-color: var(--form-main-color);
+	border: 1px solid var(--form-main-color);
+	color: white;
+}
+
+/* Ustawienie właściwosci ikon w przycisku */
+.fa-user-edit {
+	margin-right: 7px;
+	margin-right: 7px;
+	color: rgb(230, 170, 17);
+}
+.fa-user {
+	margin-right: 7px;
+	color: rgb(230, 170, 17);
+}
+
+/* Zmiana koloru ikon przycisku po najechaniu */
+.button:hover .fa-user {
+	color: rgb(255, 255, 255);
+}
+.button:hover .fa-user-edit {
+	color: rgb(255, 255, 255);
+}
+
+/* Bars menu */
+
+.fa-bars {
+	display: none;
+	padding: 5px 5px;
+	font-size: 22px;
+	transition: color 0.3s;
+	cursor: pointer;
+}
+.fa-bars:hover {
+	color: var(--form-main-color);
+}
+
+.bars-menu {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 120vh;
+	width: 100%;
+	background-color: rgb(80, 80, 80);
+}
+.bars-menu .fa-times {
+	align-self: flex-end;
+	margin-top: 20px;
+	margin-right: 20px;
+	padding: 5px 5px;
+	font-size: 24px;
+	color: white;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.bars-menu .fa-times:hover {
+	color: var(--form-main-color);
+}
+
+.bars-menu-btn {
+	width: 80%;
+	margin-top: 20px;
+	padding: 10px 0;
+	background: transparent;
+	border: none;
+	border-bottom: 3px solid white;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 16px;
+	color: white;
+	cursor: pointer;
+}
+.bars-menu-btn:hover {
+	color: var(--form-main-color);
+	border-bottom: 3px solid var(--form-main-color);
+}
+
+@media (max-width: 681px) {
+	.fa-bars {
+		display: flex;
+	}
+	.button-nav {
+		display: none;
+	}
+}
+
+/* Main */
+.main {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+}
+
+.contact-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 80%;
+	height: 90%;
+	background-color: rgb(255, 255, 255);
+}
+
+/* Main - contact-form-wrapper */
+.contact-form-wrapper {
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1000px;
+}
+
+/* Formularz kontaktowy */
+.contact-form {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+}
+
+.input-box {
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
+	padding: 10px 10px;
+	border: 1px solid rgb(152, 152, 152);
+	border-radius: 30px;
+}
+.input-box:hover {
+	border: 1px solid var(--form-border-focus-color);
+}
+.input-box i {
+	color: var(--form-main-color);
+}
+
+.input-error {
+	margin-top: 10px;
+	margin-left: 10px;
+	color: rgb(203, 48, 48);
+}
+
+.input-box input {
+	flex-grow: 1;
+	margin-left: 10px;
+	font-size: 18px;
+	border: none;
+	background: transparent;
+	color: rgb(40, 40, 40);
+}
+input:focus {
+	outline: none;
+}
+
+select {
+	margin-top: 20px;
+	padding: 10px 0;
+	text-align: center;
+	border: 1px solid rgb(152, 152, 152);
+	border-radius: 18px;
+	font-size: 18px;
+	color: rgb(123, 123, 123);
+}
+select:hover {
+	border: 1px solid var(--form-border-focus-color);
+}
+
+textarea {
+	min-height: 100px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px 20px;
+	border: 1px solid rgb(162, 162, 162);
+	border-radius: 5px;
+	font-size: 16px;
+	font-family: 'Raleway', sans-serif;
+	font-family: 'Roboto', sans-serif;
+}
+textarea:focus {
+	outline: none;
+	border: 1px solid var(--form-border-focus-color);
+}
+.formContent-error {
+	margin-top: 1px;
+	margin-bottom: 5px;
+}
+
+input[type='file'] {
+	display: none;
+}
+
+/* Style dla input file label */
+.custom-file-upload {
+	margin-bottom: 20px;
+	padding: 6px 12px;
+	border: 1px solid rgb(140, 140, 140);
+	text-align: center;
+	color: rgb(111, 111, 111);
+	cursor: pointer;
+}
+.custom-file-upload i {
+	margin-right: 5px;
+	color: var(--form-main-color);
+}
+.custom-file-upload:hover {
+	background-color: var(--form-main-color);
+	color: white;
+}
+.custom-file-upload:hover .fa-cloud-upload {
+	color: white;
+}
+
+#check-box-agreement {
+	height: 25px;
+	width: 25px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+.send-btn {
+	margin-top: 20px;
+	margin-bottom: 80px;
+	padding: 20px 10px;
+	border: none;
+	border-radius: 30px;
+	background-color: #fce043;
+	background-image: linear-gradient(315deg, #ffde24 20%, #fb7ba2 74%);
+	opacity: 1;
+	font-size: 15px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+}
+.send-btn:hover {
+	background-image: linear-gradient(115deg, #fce043 0%, #fb7ba2 74%);
+}
+
+/* Sekcja - Informacjie kontaktowe */
+.section-contact-info {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.contact-info-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 200px;
+	width: 400px;
+	margin: 20px 20px;
+	padding: 10px 100px;
+	border-radius: 10px;
+	box-shadow: 0 0px 10px rgb(196, 196, 196);
+	background-color: rgb(255, 255, 255);
+	text-align: center;
+	cursor: default;
+}
+.contact-info-box:hover {
+	background-color: rgb(240, 240, 240);
+}
+.contact-info-box i {
+	margin-top: 10px;
+	font-size: 30px;
+	color: gold;
+}
+.contact-info-box-text {
+	margin-top: 15px;
+	font-weight: 500;
+	color: rgb(104, 104, 104);
+	letter-spacing: 1px;
+}
+
+/* Skecja - mapa */
+.map-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 10px 10px;
+}
+
+#map {
+	margin: 10px 0;
+	height: 400px;
+	width: 80%;
+	border-radius: 10px;
+}
+
+/* Sekcja - footer */
+.footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 20px 0;
+	border-top: 1px solid var(--section-title-line-color);
+	background-color: var(--footer-bg-color);
+}
+
+.button-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.button-box-btn {
+	padding: 2px 15px;
+	border: none;
+	border-right: 2px solid rgb(165, 165, 165);
+	font-size: 12px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	background: transparent;
+	color: rgb(52, 52, 52);
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.button-box-btn-end {
+	border: none;
+}
+.button-box-btn:hover {
+	color: rgb(0, 0, 0);
+}
+
+.logo {
+	font-size: 18px;
+	color: rgb(103, 103, 103);
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.logo .fa-heart {
+	margin-left: 5px;
+}
+.logo:hover {
+	color: rgb(0, 0, 0);
+}
+
+.vous-vous {
+	font-size: 21px;
+	font-weight: 700;
+	color: var(--form-main-color);
+}
+
+.footer-copy-right {
+	border: none;
+}
+
+@media (max-width: 960px) {
+	.logo {
+		margin-bottom: 15px;
+	}
+}
+
+@media (max-width: 1150px) {
+	.footer-copy-right {
+		margin-top: 15px;
+	}
+}
+
+/* Other */
+.section-title {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 30px;
+	border-top: 1px solid var(--section-title-line-color);
+	font-size: 22px;
+	color: rgb(77, 77, 77);
+	text-transform: uppercase;
+	text-align: center;
+	letter-spacing: 2px;
+}
+.section-title-first {
+	border: none;
+}
