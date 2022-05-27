@@ -93,6 +93,13 @@ public class HelloController {
         return user;
     }
 
+    @GetMapping(value="/reset")
+    public String reset(){
+        userFriendsRepository.deleteAll();
+        userConversationRepository.deleteAll();
+        return "test";
+    }
+
     @GetMapping(value="/m")
     public String m(){
         System.out.println("MongoDB test");
@@ -128,7 +135,8 @@ public class HelloController {
         userConversations1.setEmail("marcin3246a51@o2.pl");
 
         Conversation conversation1a = new Conversation();
-        conversation1a.setOwnerEmail("marcin3246a51@o2.pl"); conversation1a.setRecipientEmail("karolina455@gmail.com");
+        conversation1a.setOwnerEmail("marcin3246a51@o2.pl");
+        conversation1a.setRecipientEmail("karolina455@gmail.com");
         userConversations1.getConversationList().add(conversation1a);
 
 

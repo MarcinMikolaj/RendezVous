@@ -111,10 +111,32 @@ public class PanelService {
                 .anyMatch(candidateEmail -> candidateEmail.equals(userFriendsChooser.getEmail()));
 
        if(chooserKey && candidateKey){
+
            userFriendsChooser.getFormedPairsWithUsersList().add(userFriendsCandidate.getEmail());
+
+           Conversation conversationChooser = new Conversation();
+           conversationChooser.setOwnerEmail(userFriendsChooser.getEmail());
+           conversationChooser.setRecipientEmail(userFriendsCandidate.getEmail());
+           UserConversations chooserConversations = userConversationRepository.findByEmail(userFriendsChooser.getEmail());
+           chooserConversations.getConversationList().add(conversationChooser);
+
+
+
            userFriendsCandidate.getFormedPairsWithUsersList().add(userFriendsChooser.getEmail());
+
+           Conversation conversationCandidate = new Conversation();
+           conversationCandidate.setOwnerEmail(userFriendsCandidate.getEmail());
+           conversationCandidate.setRecipientEmail(userFriendsChooser.getEmail());
+           UserConversations candidateConversations = userConversationRepository.findByEmail(userFriendsCandidate.getEmail());
+           candidateConversations.getConversationList().add(conversationCandidate);
+
+
            userFriendsRepository.save(userFriendsChooser);
            userFriendsRepository.save(userFriendsCandidate);
+
+           userConversationRepository.save(chooserConversations);
+           userConversationRepository.save(candidateConversations);
+
            return true;
        }
 

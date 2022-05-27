@@ -734,17 +734,20 @@ const rejectUser = () => {
 const setViewedUserInView = (viewedUser) => {
 	swiper.removeAllSlides();
 
-	viewedUser.pictures.forEach(function (picture, index) {
-		let newDiv = document.createElement('div');
-		let pictureAddedToSwiper = new Image();
+	if(viewedUser.pictures){
+		viewedUser.pictures.forEach(function (picture, index) {
+			let newDiv = document.createElement('div');
+			let pictureAddedToSwiper = new Image();
 
-		newDiv.classList.add('swiper-slide');
-		pictureAddedToSwiper.classList.add('swiper-slide-img');
-		pictureAddedToSwiper.src = picture.bytes;
+			newDiv.classList.add('swiper-slide');
+			pictureAddedToSwiper.classList.add('swiper-slide-img');
+			pictureAddedToSwiper.src = picture.bytes;
 
-		newDiv.appendChild(pictureAddedToSwiper);
-		swiper.appendSlide(newDiv);
-	});
+			newDiv.appendChild(pictureAddedToSwiper);
+			swiper.appendSlide(newDiv);
+		});
+	}
+
 
 	swiper.update();
 
@@ -928,7 +931,7 @@ const sendUpdateRequestRecipientList = () => {
 	let updateMessageRecipientInterval = window.setInterval(function () {
 		let quote = { username: myCredentials.email };
 		recipientWebSocketClient.send('/app/recipients', {}, JSON.stringify(quote));
-	}, 60000);
+	}, 6000);
 };
 
 const connectWebSocket = () => {
@@ -1021,15 +1024,34 @@ const showRecipientsInPanel = (recipients) => {
 	recipientListBox.innerHTML = '';
 	recipients.forEach(function (item) {
 		let newLi = document.createElement('li');
-		newLi.innerHTML = `<li id="${item.email}" class="recipient-box">
+
+
+		if(item.profileImg){
+			newLi.innerHTML = `<li id="${item.email}" class="recipient-box">
                             <div class="recipient-status"></div>
-                            <img class="recipient-img" src="${item.profileImg.bytes}" alt="">
+                            <img class="recipient-img" src="${item.profileImg.bytes}" alt="brak zdj">
                             <div class="recipient-box-center">
                                 <p class="recipient-nick">${item.nick}</p>
                                 <p class="recipient-last-message">${item.lastMessage.text}</p>
                             </div>
                             <p class="recipient-last-message-time">${item.lastMessage.time}</p>
                         </li>`;
+		}else {
+			newLi.innerHTML = `<li id="${item.email}" class="recipient-box">
+                            <div class="recipient-status"></div>
+                            <img class="recipient-img" src="#" alt="brak zdj">
+                            <div class="recipient-box-center">
+                                <p class="recipient-nick">${item.nick}</p>
+                                <p class="recipient-last-message">${item.lastMessage.text}</p>
+                            </div>
+                            <p class="recipient-last-message-time">${item.lastMessage.time}</p>
+                        </li>`;
+		}
+
+
+
+
+
 		newLi.classList.add('recipient-box');
 		recipientListBox.appendChild(newLi);
 	});
@@ -1038,7 +1060,10 @@ const showRecipientsInPanel = (recipients) => {
 // It allows you display recipient in 'preview panel'
 const showRecipientInPreviewPanel = (actualRecipient) => {
 
-	previewImg.src = actualRecipient.profileImg.bytes;
+	if(actualRecipient.profileImg){
+		previewImg.src = actualRecipient.profileImg.bytes;
+	}
+
 	previewName.textContent = actualRecipient.name + ' ';
 	previewAge.textContent = actualRecipient.age;
 	previewCity.textContent = actualRecipient.city;

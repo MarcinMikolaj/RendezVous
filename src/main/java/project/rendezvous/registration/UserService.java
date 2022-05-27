@@ -72,7 +72,7 @@ public class UserService {
             UserFriends userFriends = new UserFriends(email);
             userFriendsRepository.save(userFriends);
 
-            UserDescription userDescription = new UserDescription(email, "brak", user.getGender(), user.getAge(), "brak", "brak", "brak");
+            UserDescription userDescription = new UserDescription(email, user.getNick(), user.getGender(), user.getAge(), "hetero", "single", "Użytkownik nie dodał opisu");
             userDescriptionRepository.save(userDescription);
 
             UserPreferences userPreferences = new UserPreferences(email, "all", 18, 80, 160, "all", "all");

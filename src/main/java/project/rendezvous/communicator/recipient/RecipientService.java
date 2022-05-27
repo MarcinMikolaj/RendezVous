@@ -6,6 +6,7 @@ import project.rendezvous.communicator.ChatMessage;
 import project.rendezvous.communicator.messages.Conversation;
 import project.rendezvous.communicator.messages.UserConversationRepository;
 import project.rendezvous.communicator.messages.UserConversations;
+import project.rendezvous.other.ConsoleColors;
 import project.rendezvous.panel.FileManager;
 import project.rendezvous.panel.Picture;
 import project.rendezvous.registration.*;
@@ -73,11 +74,20 @@ public class RecipientService {
 
         UserDescription userDescription = userDescriptionRepository.findByEmail(recipientEmail);
 
-        User user = userRepository.findByEmail(recipientEmail); // ?
-        String path = userDescription.getPathToImgList().get(0);
-        Picture picture = fileManager.deserializationObjectAndGetFromDirectory(path);
-
+        User user = userRepository.findByEmail(recipientEmail);
         Recipient recipient = new Recipient();
+
+       try
+       {
+           String path = userDescription.getPathToImgList().get(0);
+           Picture picture = fileManager.deserializationObjectAndGetFromDirectory(path);
+           recipient.setProfileImg(picture);
+       } catch (Exception e){
+           System.out.println(ConsoleColors.RED + "createRecipient -img" + ConsoleColors.RESET);
+       }
+
+
+
         recipient.setEmail(userDescription.getEmail());
         recipient.setNick(user.getNick());
         recipient.setName(userDescription.getName());
@@ -88,7 +98,7 @@ public class RecipientService {
         recipient.setAboutMeDescription(userDescription.getAboutMeDescription());
         recipient.setInterested(userDescription.getInterested());
         recipient.setWork(userDescription.getWork());
-        recipient.setProfileImg(picture);
+
         recipient.setActive(false);
 
         return recipient;
@@ -103,6 +113,8 @@ public class RecipientService {
         Conversation conversation = userConversations.getConversationList().stream()
                 .filter(conv -> conv.getRecipientEmail().equals(loggedUserEmail))
                 .findFirst().orElse(null);
+
+
 
         ChatMessage chatmessage = reverse(conversation.getChatMessageList().stream())
                 .filter(chatMessage -> chatMessage != null)

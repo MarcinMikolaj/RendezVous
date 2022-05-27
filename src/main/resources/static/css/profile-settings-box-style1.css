@@ -429,21 +429,21 @@
 }
 
 .square1 {
-	background-image: url('../img/filter-1.jpg');
+	background-image: url('../imges/filter-1.jpg');
 }
 .square2 {
-	background-image: url('../img/filter-2.jpg');
+	background-image: url('../imges/filter-2.jpg');
 }
 .square3 {
-	background-image: url('../img/filter-4.jpg');
+	background-image: url('../imges/filter-4.jpg');
 }
 
 .square4 {
-	background-image: url('../img/filter-3.jpg');
+	background-image: url('../imges/filter-3.jpg');
 }
 
 .square5 {
-	background-image: url('../img/filter-5.jpg.jpg');
+	background-image: url('../imges/filter-5.jpg');
 }
 
 .filter {
