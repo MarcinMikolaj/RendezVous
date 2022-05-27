@@ -1,5 +1,22 @@
 import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js';
 
+let client;
+let recipientWebSocketClient;
+let conversationWebSocketClient;
+
+const recipientListBox = document.querySelector('.recipient-list-box');
+const conversationList = document.querySelector('.conversation-list');
+const inputMessageField = document.querySelector('.input-message-field');
+const sendMessageBtn = document.querySelector('.send-btn');
+let actualRecipientList;
+let actualRecipient;
+let actualRecipientName = '';
+
+const searchRecipientInput = document.querySelector('.search-recipient-input');
+const conversationTopNameP = document.querySelector('.conversation-top-name-p');
+
+
+
 let panelWrapper;
 let leftMessageBox;
 let rightMessageBox;
@@ -103,10 +120,15 @@ let previewUniversity;
 let previewCity;
 let previewWork;
 let previewKilometersAway;
+let previewAboutMe;
+let previewInterested;
 
 // User Localization
 let latitude; // Szerokość geograficzna
 let longitude; // długość geograficzna
+
+// User pair actions
+let removePairBtn;
 
 // Another
 let swiperWrapper;
@@ -240,12 +262,17 @@ const prepareDOMElementns = () => {
 	previewCity = document.querySelector('.preview-city');
 	previewWork = document.querySelector('.preview-work');
 	previewKilometersAway = document.querySelector('.preview-KilometersAway');
+	previewAboutMe = document.querySelector('.preview-about-me');
+	previewInterested = document.querySelector('.preview-interested');
 
 	// User Description Image
 	descriptionImageInput = document.querySelector('.description-image-input');
 	saveDescriptionImageBtn = document.querySelector(
 		'.save-description-image-btn'
 	);
+
+	// User pair action
+	removePairBtn = document.querySelector('.report-remove-pair-btn');
 
 	// Another
 	swiperWrapper = document.querySelector('.swiper-wrapper');
@@ -322,6 +349,9 @@ const prepareDOMEvents = () => {
 	menuBtnMatches.addEventListener('click', menuBtnMatchesAction);
 	menuBtnSettings.addEventListener('click', menuBtnSettingsAction);
 	menuBtnLogout.addEventListener('click', logout);
+
+	// User pairs actions
+	removePairBtn.addEventListener('click', userPairAction);
 
 	// Mobile
 	mobileMenuBtnBrowseCandidates.addEventListener('click', menuBtnBrowseCandidatesAction);
@@ -430,7 +460,46 @@ const showRecipientsInMobile = () => {
 
 // --------------------- Swipe.js ------------------------
 
-const swiper = new Swiper('.swiper', {
+const swiper = new Swiper('.swiper1', {
+	// Optional parameters
+	direction: 'horizontal',
+	loop: true,
+	speed: 150,
+	spaceBetween: 0,
+
+	effect: 'coverflow',
+	coverflowEffect: {
+		rotate: 0,
+		slideShadows: false,
+	},
+
+	grabCursor: true,
+	slidesPerView: 1,
+	centeredSlides: true,
+
+	autoplay: {
+		delay: 3000,
+		disableOnInteraction: false,
+		pauseOnMouseEnter: true,
+		reverseDirection: false,
+		stopOnLastSlide: false,
+	},
+
+	// Navigation arrows
+	navigation: {
+		nextEl: '.swiper-button-next',
+		prevEl: '.swiper-button-prev',
+	},
+
+	// And if we need scrollbar
+	scrollbar: {
+		el: '.swiper-scrollbar',
+	},
+});
+
+
+
+const swiper2 = new Swiper('.swiper2', {
 	// Optional parameters
 	direction: 'horizontal',
 	loop: true,
@@ -504,6 +573,7 @@ const getMyUserDescription = () => {
 			console.log(response);
 		})
 		.then(() => setMyUserDescription(myUserDescription))
+		.then(addPictures)
 		.catch((error) => console.log('err: ', error));
 };
 
@@ -588,6 +658,17 @@ const sendSingleImage = () => {
 	};
 
 	reader.readAsDataURL(descriptionImageInput.files[0]);
+
+	const [file] = document.querySelector('.description-image-input').files;
+
+	const img = document.createElement('img');
+	img.classList.add('preview-send-img');
+	img.src = URL.createObjectURL(file);
+
+	document.querySelector('.my-picture-new').innerHTML = '';
+
+
+	const myTimeout = setTimeout(addPictures, 3000);
 };
 
 // It allows you to send single img(base64) to server
@@ -728,6 +809,42 @@ const sendGeoLocalizationToServer = () => {
 	);
 };
 
+// ***************** User actions for pairs *****************
+
+const userPairAction = () => {
+	const response = fetch(
+		'http://localhost:8080/panel/api/pair/remove',
+		{
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			'Access-Control-Allow-Origin': '*',
+			body: JSON.stringify({
+				initialingUserEmail: myCredentials.email,
+				forTheUsersEmail: actualRecipientName,
+				request: 'remove',
+			}),
+		}
+	).then((response) => {
+			switch (response.status) {
+				case 200:
+					console.log('pair removed')
+					// Update recipient list
+					let quote = { username: myCredentials.email };
+					recipientWebSocketClient.send('/app/recipients', {}, JSON.stringify(quote));
+					break;
+				case 404:
+					console.log('pair could not be removed')
+					break;
+				default:
+					console.log(`pair could not be removed`);
+			}
+		})
+		.catch((error) => console.log('err: ', error));
+}
+
 // *****************  Filters **************************
 
 // It allows you to upload your currently saved userPreferences to the server
@@ -752,7 +869,6 @@ const sendUserPreferences = () => {
 			}),
 		}
 	).then((res) => console.log(res));
-	// .then(() => getUserPreferencesFromServer()) Czy jest nam to potrzebne
 };
 
 const getUserPreferencesFromServer = () => {
@@ -781,23 +897,8 @@ const setMyUserPreferences = (preferences) => {
 	selectSexualOrientation.value = preferences.sexualOrientation;
 };
 
-// ********************************* Communicator *****************************
+// ********************************* Communicator by WebSocket *****************************
 
-let client;
-let recipientWebSocketClient;
-let conversationWebSocketClient;
-
-const recipientListBox = document.querySelector('.recipient-list-box');
-const conversationList = document.querySelector('.conversation-list');
-const inputMessageField = document.querySelector('.input-message-field');
-const sendMessageBtn = document.querySelector('.send-btn');
-let actualRecipientList;
-let actualRecipient;
-let actualRecipientName = '';
-
-const searchRecipientInput = document.querySelector('.search-recipient-input');
-const conversationTopNameP = document.querySelector('.conversation-top-name-p');
-// const conversationInfoImg = document.querySelector('.conversation-info-img');
 
 const sendMessage = () => {
 	let today = new Date();
@@ -943,6 +1044,8 @@ const showRecipientInPreviewPanel = (actualRecipient) => {
 	previewCity.textContent = actualRecipient.city;
 	previewWork.textContent = actualRecipient.work;
 	previewUniversity.textContent = actualRecipient.university;
+	previewAboutMe.textContent = actualRecipient.aboutMeDescription;
+	previewInterested.textContent = actualRecipient.interested;
 
 	// previewKilometersAway.textContent = actualRecipient.kilometersAway + ' km';
 
@@ -1085,26 +1188,10 @@ async function startVideoTalkerApplication()  {
 		video: true,
 	});
 	localVideo.srcObject = localStream;
-	startButton.disabled = true;
-	hangupButton.disabled = false;
+	// startButton.disabled = true;
+	// hangupButton.disabled = false;
 	postMessage({type: 'ready'});
 };
-
-// startButton.onclick = async () => {
-// 	localStream = await navigator.mediaDevices.getUserMedia({
-// 		audio: true,
-// 		video: true,
-// 	});
-// 	localVideo.srcObject = localStream;
-// 	startButton.disabled = true;
-// 	hangupButton.disabled = false;
-// 	postMessage({type: 'ready'});
-// };
-
-// hangupButton.onclick = async () => {
-// 	hangup();
-// 	postMessage({type: 'bye'});
-// };
 
 // Checking message is correct and calls the method responsible for send and display in chat panel this message.
 const sendAndShowMyMessageToOtherUser = () => {
@@ -1344,6 +1431,178 @@ const getDateTime = () => {
 	let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 	let dateTime = date+' '+time;
 	return dateTime;
+}
+
+// WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+const myPictures = document.querySelectorAll('.my-picture');
+
+const zoomIn = (e) => {
+	const img = e.target;
+
+	if (!img) return;
+
+	const clientX = e.clientX;
+	const clientY = e.clientY;
+
+	const fromEdgeTop = img.offsetTop;
+	const fromEdgeLeft = img.offsetLeft;
+
+	const x = clientX - fromEdgeLeft;
+	const y = clientY - fromEdgeTop;
+
+	img.style.transformOrigin = `${x}px ${y}px`;
+};
+
+const zoomOut = () => {
+	const img = document.querySelector('.active-picture');
+	if (!img) return;
+	img.style.transform = 'scale(1)';
+};
+
+myPictures.forEach((picture) => {
+	picture.addEventListener('click', () => {
+		myPictures.forEach((p) => {
+			p.classList.add('hide-photos');
+			p.classList.add('active-picture');
+		});
+
+		picture.classList.remove('hide-photos');
+		picture.classList.add('active-picture');
+
+		if (picture.classList.contains('active-picture')) {
+			picture.addEventListener('mousemove', zoomIn);
+			picture.addEventListener('mouseout', zoomOut);
+		}
+	});
+});
+
+window.addEventListener('click', (event) => {
+	if (!event.target.classList.contains('my-picture')) {
+		myPictures.forEach((p) => {
+			p.classList.remove('hide-photos');
+			p.classList.remove('active-picture');
+		});
+	}
+});
+
+document.querySelector('.description-image-input').onchange = (e) => {
+	const [file] = document.querySelector('.description-image-input').files;
+	if (file) {
+		const img = document.createElement('img');
+		img.classList.add('preview-send-img');
+		img.src = URL.createObjectURL(file);
+		document.querySelector('.my-picture-new').appendChild(img);
+	}
+};
+
+const sdNextButton = document.querySelector('.s-d-next-button');
+const sdPrevButton = document.querySelector('.s-d-prev-button');
+const steps = document.querySelectorAll('.step');
+const pages = document.querySelectorAll('.form-page');
+const progressbar = document.querySelector('.progress-bar');
+let progressBarCounter = 1;
+
+const sdHandleNext = () => {
+	if (progressBarCounter < steps.length) {
+		progressBarCounter++;
+		handleProgressBar();
+		handleFormPage();
+		handleProgressBarButtons();
+	}
+};
+
+const sdHandlePrev = () => {
+	if (progressBarCounter > 1) {
+		progressBarCounter--;
+		handleProgressBar();
+		handleFormPage();
+		handleProgressBarButtons();
+	}
+};
+
+const handleFormPage = () => {
+	pages.forEach((page, index) => {
+		if (page.dataset.number == progressBarCounter) {
+			page.classList.add('active-page');
+		} else {
+			page.classList.remove('active-page');
+		}
+	});
+};
+
+const handleProgressBar = (params) => {
+	steps.forEach((step, index) => {
+		if (progressBarCounter > index) {
+			step.classList.add('active-step');
+		} else {
+			step.classList.remove('active-step');
+		}
+	});
+
+	const allActiveSteps = document.querySelectorAll('.active-step');
+	const actualWidthForProgressBar =
+		((allActiveSteps.length - 1) / (steps.length - 1)) * 100;
+	progressbar.style.width = actualWidthForProgressBar + '%';
+};
+
+const handleProgressBarButtons = () => {
+	if (progressBarCounter <= 1) {
+		sdPrevButton.disabled = true;
+	} else {
+		sdPrevButton.disabled = false;
+	}
+
+	if (progressBarCounter >= 5) {
+		sdNextButton.disabled = true;
+	} else {
+		sdNextButton.disabled = false;
+	}
+};
+
+sdNextButton.addEventListener('click', sdHandleNext);
+sdPrevButton.addEventListener('click', sdHandlePrev);
+
+const fs = document.querySelectorAll('.p');
+const os = document.querySelectorAll('.o');
+
+fs.forEach((element) => {
+	element.addEventListener('click', () => {
+		os.forEach((o) => {
+			o.classList.remove('active-filter');
+		});
+
+		const t = element.querySelector('.o');
+		t.classList.add('active-filter');
+	});
+});
+
+const preferencesInputs = document.querySelectorAll(
+	'.preferences-change-input'
+);
+preferencesInputs.forEach((element) => {
+	element.addEventListener('change', () => {
+		sendUserPreferences();
+	});
+});
+
+const myPictureArea = document.querySelector('.my-pictures-area-all');
+
+const addPictures = () => {
+
+	const oldPicturesToRemove = document.querySelectorAll('.my-picture-r');
+
+	oldPicturesToRemove.forEach(picture => {
+		picture.remove();
+	})
+
+	myUserDescription.pictures.forEach(function (picture, index){
+		let newImg = document.createElement('img');
+		newImg.classList.add('my-picture');
+		newImg.classList.add('my-picture-r');
+		newImg.src = picture.bytes;
+		myPictureArea.appendChild(newImg);
+	})
 }
 
 

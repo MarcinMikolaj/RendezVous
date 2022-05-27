@@ -84,7 +84,6 @@ body {
 .offer-box {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
-
 }
 .offer-box::-webkit-scrollbar {
 	display: none;
@@ -202,7 +201,6 @@ body {
 	color: #ff0803;
 	transition: font-size 0.5s, font-weight 0.1s;
 }
-
 
 .reject-btn:hover .fa-sad-tear {
 	font-size: 33px;
@@ -333,9 +331,7 @@ body {
 
 /* Create pair link */
 .create-pair-link {
-	margin: 0 20px;
-	margin-top: 10px;
-	margin-bottom: 30px;
+	margin: 20px 20px;
 	padding: 10px 20px;
 	border: none;
 	border-radius: 20px;
@@ -355,6 +351,7 @@ body {
 
 /* Recipient box */
 .recipient-list-box {
+	flex-grow: 1;
 	overflow-y: auto;
 	overflow-x: hidden;
 	border-bottom: 1px solid var(--kolor-ramek);
@@ -407,7 +404,7 @@ body {
 	max-width: 160px;
 	overflow: hidden;
 	overflow-wrap: break-word;
-	text-overflow: ellipsis " ...";
+	text-overflow: ellipsis ' ...';
 	white-space: nowrap;
 	font-size: 13px;
 	color: rgb(116, 116, 116);
@@ -575,7 +572,7 @@ body {
 }
 .report-remove-pair-btn {
 	width: 50%;
-	padding: 20px 10px;
+	padding: 10px 10px;
 	border: none;
 	border-right: 1px solid rgb(216, 216, 216);
 	cursor: pointer;
@@ -583,13 +580,11 @@ body {
 	font-weight: 500;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	color: #5a5a6d;
-	background-color: rgb(228, 228, 228);
+	color: #f5f5f5;
+	background-color: #c1383a;
 }
 .report-remove-pair-btn:hover {
-	color: white;
-	background-color: #fad0c4;
-	background-image: linear-gradient(315deg, #fad0c4 0%, #f1a7f1 74%);
+	background-color: #f9484a;
 }
 
 /* Conversation top panel */
@@ -600,17 +595,22 @@ body {
 	align-items: center;
 	min-height: 80px;
 	border-bottom: 1px solid var(--kolor-ramek);
-	/* background-color: white; */
 }
 .conversation-top-icones-box {
 	margin-right: 30px;
 }
 .conversation-top-icones-i {
 	margin: 10px 10px;
-	padding: 5px 5px;
+	padding: 10px 10px;
+	border-radius: 50%;
 	font-size: 18px;
-	color: #fb7ba2;
+	color: gold;
+	transition: background-color 0.3s, color 0.3s;
 	cursor: pointer;
+}
+.conversation-top-icones-i:hover {
+	background-color: gold;
+	color: #ffffff;
 }
 .conversation-top-name {
 	display: flex;
@@ -765,7 +765,7 @@ body {
 		width: 100%;
 	}
 
-/* additional */
+	/* additional */
 	.like-btns-box {
 		width: 100%;
 		margin-top: 115px;

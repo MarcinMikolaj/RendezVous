@@ -85,6 +85,8 @@ public class RecipientService {
         recipient.setCity(userDescription.getCity());
         recipient.setLastMessage(getLastMessage(loggedUserEmail, recipientEmail));
         recipient.setUniversity(userDescription.getUniversity());
+        recipient.setAboutMeDescription(userDescription.getAboutMeDescription());
+        recipient.setInterested(userDescription.getInterested());
         recipient.setWork(userDescription.getWork());
         recipient.setProfileImg(picture);
         recipient.setActive(false);

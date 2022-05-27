@@ -20,6 +20,8 @@ public class Recipient {
     private String work;
     private String university;
     private String city;
+    private String aboutMeDescription;
+    private String interested;
     // Set only when sending the object to the client
     private int kilometersAway;
 
@@ -35,6 +37,22 @@ public class Recipient {
         this.email = email;
         this.nick = nick;
         this.profileImg = profileImg;
+        this.isActive = isActive;
+        this.lastMessage = lastMessage;
+    }
+
+    public Recipient(String email, String nick, Picture profileImg, String name, int age, String work, String university, String city, String aboutMeDescription, String interested, int kilometersAway, boolean isActive, ChatMessage lastMessage) {
+        this.email = email;
+        this.nick = nick;
+        this.profileImg = profileImg;
+        this.name = name;
+        this.age = age;
+        this.work = work;
+        this.university = university;
+        this.city = city;
+        this.aboutMeDescription = aboutMeDescription;
+        this.interested = interested;
+        this.kilometersAway = kilometersAway;
         this.isActive = isActive;
         this.lastMessage = lastMessage;
     }
@@ -125,6 +143,22 @@ public class Recipient {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getAboutMeDescription() {
+        return aboutMeDescription;
+    }
+
+    public void setAboutMeDescription(String aboutMeDescription) {
+        this.aboutMeDescription = aboutMeDescription;
+    }
+
+    public String getInterested() {
+        return interested;
+    }
+
+    public void setInterested(String interested) {
+        this.interested = interested;
     }
 
     @Override

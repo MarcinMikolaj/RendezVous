@@ -2,6 +2,9 @@ package project.rendezvous.panel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.rendezvous.communicator.messages.Conversation;
+import project.rendezvous.communicator.messages.UserConversationRepository;
+import project.rendezvous.communicator.messages.UserConversations;
 import project.rendezvous.panel.localization.GeoLocalization;
 import project.rendezvous.panel.localization.GeoLocalizationRepository;
 import project.rendezvous.panel.localization.GeoLocalizationService;
@@ -25,6 +28,7 @@ public class PanelService {
     private UserDescriptionRepository userDescriptionRepository;
     private UserFriendsRepository userFriendsRepository;
     private UserPreferencesRepository userPreferencesRepository;
+    private UserConversationRepository userConversationRepository;
 
     private GeoLocalizationRepository geoLocalizationRepository;
     private GeoLocalizationService geoLocalizationService;
@@ -47,6 +51,11 @@ public class PanelService {
     @Autowired
     public void setUserPreferencesRepository(UserPreferencesRepository userPreferencesRepository){
         this.userPreferencesRepository = userPreferencesRepository;
+    }
+
+    @Autowired
+    public void setUserConversationRepository(UserConversationRepository userConversationRepository) {
+        this.userConversationRepository = userConversationRepository;
     }
 
     @Autowired
@@ -110,6 +119,44 @@ public class PanelService {
        }
 
        return false;
+    }
+
+   public boolean removePair(UserActionForPairRequest userActionForPairRequest){
+
+       removeLike(userActionForPairRequest.getInitialingUserEmail(), userActionForPairRequest.getForTheUsersEmail());
+       removeLike(userActionForPairRequest.getForTheUsersEmail(), userActionForPairRequest.getInitialingUserEmail() );
+
+       removeConversation(userActionForPairRequest.getInitialingUserEmail(), userActionForPairRequest.getForTheUsersEmail());
+       removeConversation(userActionForPairRequest.getForTheUsersEmail(), userActionForPairRequest.getInitialingUserEmail() );
+
+        return true;
+    }
+
+    private void removeLike(String removing, String removed){
+        UserFriends userFriends = userFriendsRepository.findByEmail(removing);
+        List<String> userFriendsResult =  userFriends.getFormedPairsWithUsersList().stream()
+                .filter(pair -> pair != null)
+                .filter(pair -> !pair.equals(removed))
+                .collect(Collectors.toList());
+
+        userFriends.setFormedPairsWithUsersList(userFriendsResult);
+        userFriends.getLikeUsers().remove(removed);
+        userFriends.getRejectedUsers().add(removed);
+
+        userFriendsRepository.save(userFriends);
+    }
+
+    private void removeConversation(String removing, String removed){
+
+        UserConversations userConversations = userConversationRepository.findByEmail(removing);
+
+        List<Conversation> conversationListResult = userConversations.getConversationList().stream()
+                .filter(pair -> pair != null)
+                .filter(conv -> !conv.getRecipientEmail().equals(removed))
+                .collect(Collectors.toList());
+
+        userConversations.setConversationList(conversationListResult);
+        userConversationRepository.save(userConversations);
     }
 
 

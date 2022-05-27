@@ -1,7 +1,10 @@
 package project.rendezvous.panel;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.rendezvous.other.ConsoleColors;
 import project.rendezvous.panel.localization.GeoLocalization;
@@ -105,6 +108,21 @@ public class PanelRestController {
 
     }
 
+    // Enables to handle requests of a given user concerning pairs created with him
+    @RequestMapping(path = "/panel/api/pair/remove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserActionForPairRequest> handleTheActionRequestForPairsOfUsers(@RequestBody UserActionForPairRequest userActionForPairRequest) {
+
+      Boolean result = panelService.removePair(userActionForPairRequest);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+
+        if(result)
+            return new ResponseEntity<>(userActionForPairRequest, headers, HttpStatus.OK); // 200
+        else
+            return new ResponseEntity<>(userActionForPairRequest, headers, HttpStatus.NOT_FOUND); // 404
+    }
+
 
     // It allows you to send next candidate to client
     @RequestMapping(path = "/panel/api/userDescription/sendNext", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -136,7 +154,6 @@ public class PanelRestController {
     //  It allows you to get from client and update userFriends object
     @RequestMapping(path = "/panel/api/userFriends/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateLikeAndRejectUsers(@RequestBody ToUpdateLikeOrRejectUser toUpdateLikeOrRejectUser){
-//        System.out.println("Aktualizacja listy użytkowników polubionych: " + toUpdateLikeOrRejectUser.toString());
         panelService.updateListLikeOrRejectUsers(toUpdateLikeOrRejectUser);
     }
 
@@ -144,7 +161,6 @@ public class PanelRestController {
     // Receive UserPreference object form client
     @RequestMapping(path = "/panel/api/userPreferences/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void getFromClientUserPreferences(@RequestBody UserPreferences userPreferences){
-        System.out.println(userPreferences.toString());
         panelService.updateUserPreferences(userPreferences.getEmail(), userPreferences);
     }
 
@@ -182,17 +198,11 @@ public class PanelRestController {
             userDescriptionToUpdate.getPathToImgList().add(pathToImg);
             userDescriptionRepository.save(userDescriptionToUpdate);
 
-
-        System.out.println(picture);
     }
 
     @RequestMapping(path = "/panel/api/picture/send", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Picture sendPictureToClient(Principal principal){
-
-//        Picture picture = fileManager.deserialization("principal");
-//        System.out.println(picture.toString());
-
         return null;
     }
 

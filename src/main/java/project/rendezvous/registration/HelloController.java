@@ -83,7 +83,6 @@ public class HelloController {
 
     @GetMapping(value="/test")
     public String test(){
-
         return "test";
     }
 
